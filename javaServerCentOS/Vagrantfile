@@ -44,6 +44,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # for PastLeo directory
   config.vm.synced_folder "../webapps", "/webapps"
 
+  # Commit Test
+
   # for shared
   # config.vm.synced_folder "webapps", "/var/lib/tomcat/webapps"
 
