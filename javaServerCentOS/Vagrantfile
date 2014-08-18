@@ -42,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "../_provision.file", "/provision.file"
 
   # for PastLeo directory
-  config.vm.synced_folder "../webapps", "/webapps"
+  config.vm.synced_folder "../webapps", "/webapps", mount_options: ["dmode=777,fmode=777"]
 
   # Commit Test
 
