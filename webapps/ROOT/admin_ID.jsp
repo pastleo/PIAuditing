@@ -1,16 +1,18 @@
 <%@ page contentType="text/html;charset=utf-8"%> 
 <html lang="zh-TW"><head>
+
+
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 
     <!-- Optional theme -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
 
+    
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="../../dist/js/bootstrap.min.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
@@ -20,28 +22,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>個資稽核系統</title>
+    <title>身份指定 | 個資稽核系統</title>
 
-    <!-- Bootstrap core CSS -->
-    <link href="../../dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+            body{
+                padding-top:40px;
+            }
+        </style>
 
-    <!-- Custom styles for this template -->
-    <link href="jumbotron.css" rel="stylesheet">
-
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="../../assets/js/ie-emulation-modes-warning.js"></script><style type="text/css"></style>
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
   </head>
 
   <body>
@@ -87,37 +76,42 @@
     </div>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
-    <div class="jumbotron">
-      <div class="container">
-        <h1>歡迎使用個資稽核系統</h1>
-        <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-        <p><a class="btn btn-primary btn-lg" role="button">使用規範 »</a></p>
-      </div>
-    </div>
-
     <div class="container">
-      <!-- Example row of columns -->
-      <div class="row">
-        <div class="col-md-4">
-          <h2>稽核人員</h2>
-          <p>有 $num 筆資料尚未稽核完成 <br>Why it doesn't accept Chinese?</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-        </div>
-        <div class="col-md-4">
-          <h2>受稽核人員</h2>
-          <p>有 $num 筆資料正在稽核中</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
-       </div>
+      <div class="page-header">
+        <h1>身份指定</h1>
       </div>
+
+      <div class="col-md-5">
+        <h3>受稽核單位</h3>
+        <div class="col-md-11">
+        <select class="form-control">
+          <option>1</option>
+          <option>2</option>
+          <option>3</option>
+          <option>4</option>
+          <option>5</option>
+        </select>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <h3>稽核人員</h3>
+        <div class="row">
+          <div class="col-xs-10">
+            <input type="text" class="form-control" placeholder="請輸入稽核人員名稱">
+          </div>
+        </div>
+      </div>
+      <div class="col-md-12">&nbsp;</div>
+      <div class="col-md-2 col-md-offset-4">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">送出</button>
+      </div>
+      <div class="row">&nbsp;</div>
 
       <hr>
 
       <footer>
         <p>© Company 2014</p>
       </footer>
-    </div> <!-- /container -->
+    </div> <!-- /container -->  
 
-
-  
-
-<embed id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd" type="application/thunder_download_plugin" height="0" width="0"></body></html>
+</body></html>

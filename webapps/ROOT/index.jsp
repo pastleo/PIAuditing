@@ -17,14 +17,6 @@
         <title>個資稽核系統</title>
 
         <style>
-            /*
-            .form-signin{
-                width: 350px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-            */
-
             body{
                 padding-top:60px;
             }
@@ -37,12 +29,13 @@
                 <div class="jumbotron">
                   <h1>個資稽核系統</h1>
                   <p>就這樣</p>
-                  <p><a class="btn btn-primary btn-lg" role="button">使用方法（尚未建置）</a></p>
+                  <p><a class="btn btn-primary btn-lg" role="button">使用規範 »</a></p>
                 </div>
             </div>
             <div class="col-md-6">
                 <form class="form-signin" role="form">
                   <h2 class="form-signin-heading">請登入</h2>
+                  <div class="col-md-2"></div>
                   <input type="email" class="form-control" placeholder="請在此輸入帳號" required="" autofocus="">
                   <div class="row">&nbsp;</div>
                   <input type="password" class="form-control" placeholder="請在此輸入密碼" required="">
