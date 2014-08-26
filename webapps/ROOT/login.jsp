@@ -2,15 +2,11 @@
     <%@ include file = "db_init.jsp"%> 
 
     <% 
-        //ua()
         /*  session["UA"] uses "user_account"
             login account uses "user_mail"
             login password uses "user_passwd"     */
         String post_acc = request.getParameter("usr_mail");
         String post_pwd = request.getParameter("pwd");
-        String ua = (String) session.getAttribute("UA");
-            //out.print("<script>function acc(){return \""+post_acc+"\"}</script>");
-            //out.print("<script>function ua(){return "+ua+"}</script>");     //WARNING
 
         try {
 
@@ -28,8 +24,7 @@
 
                 //compare password
                 if(rs.getString("user_passwd").equals(post_pwd)){
-                    ua = rs.getString("user_account");
-                    session.setAttribute("UA",ua);
+                    session.setAttribute("UA", rs.getString("user_account") );
 
                     // =========================
                     // How to distinguish between normal user and admin?
