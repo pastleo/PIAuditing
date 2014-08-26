@@ -80,7 +80,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">登出</a></li>
+            <li><a href="logout.jsp">登出</a></li>
           </ul>
         </div>
       </div>
@@ -101,12 +101,12 @@
         <div class="col-md-4">
           <h2>稽核人員</h2>
           <p>有 $num 筆資料尚未稽核完成 <br>Why it doesn't accept Chinese?</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          <p><a class="btn btn-default" href="#" role="button" onclick="alert('先掛著')">View details »</a></p>
         </div>
         <div class="col-md-4">
           <h2>受稽核人員</h2>
           <p>有 $num 筆資料正在稽核中</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          <p><a class="btn btn-default" href="#" role="button" onclick="alert('先掛著')">View details »</a></p>
        </div>
       </div>
 
@@ -117,7 +117,5 @@
       </footer>
     </div> <!-- /container -->
 
-
-  
-
-<embed id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd" type="application/thunder_download_plugin" height="0" width="0"></body></html>
+  </body>
+</html>

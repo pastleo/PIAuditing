@@ -44,7 +44,7 @@ Class.forName("com.mysql.jdbc.Driver").newInstance();
       "user_mail",
       "user_dept",
       "user_level"};  //feel free to comment out, or reorder.
-    //initailize container
+   //initailize container
    Map<String,List<String> > m = new TreeMap <String,List<String> >();
    for(String name : field_names)
       m.put(name,new Vector<String>());

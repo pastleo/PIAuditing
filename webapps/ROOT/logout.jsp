@@ -1,15 +1,8 @@
+<%@ page contentType="text/html;charset=utf-8"%> 
 <%
 session.setAttribute("UA",null);
-response.setHeader("Refresh" , "3;url=index.jsp");
+//TODO: set admin/user cookie to null, which does not exist at this moment...
+out.print("<script>alert(\"登出成功\")</script>");
+response.setHeader("Refresh" , "1;url=index.jsp");
 %>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Logout</title>
-</head>
-<body>
-    <h1>You have logout.</h1>
-</body>
-</html>
+白白der

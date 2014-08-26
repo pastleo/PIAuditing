@@ -80,7 +80,7 @@
             </li>
           </ul>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">登出</a></li>
+            <li><a href="logout.jsp">登出</a></li>
           </ul>
         </div>
       </div>
@@ -101,12 +101,12 @@
         <div class="col-md-4">
           <h2>身份指定</h2>
           <p>指派稽核人員與受稽核人員</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          <p><a class="btn btn-default" href="admin_ID.jsp" role="button">View details »</a></p>
         </div>
         <div class="col-md-4">
           <h2>稽核修正結案通知</h2>
           <p>通知稽核修正結案</p>
-          <p><a class="btn btn-default" href="#" role="button">View details »</a></p>
+          <p><a class="btn btn-default" href="#" role="button" onclick="alert('先掛著')">View details »</a></p>
        </div>
       </div>
 

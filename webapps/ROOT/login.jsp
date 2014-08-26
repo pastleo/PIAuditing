@@ -2,60 +2,55 @@
     <%@ include file = "db_init.jsp"%> 
 
     <% 
-        String usr_mail = request.getParameter("usr_mail");
-        String pwd = request.getParameter("pwd");
-        String UA = (String) session.getAttribute("UA");
-        if( usr_mail != null){
+        //ua()
+        /*  session["UA"] uses "user_account"
+            login account uses "user_mail"
+            login password uses "user_passwd"     */
+        String post_acc = request.getParameter("usr_mail");
+        String post_pwd = request.getParameter("pwd");
+        String ua = (String) session.getAttribute("UA");
+            //out.print("<script>function acc(){return \""+post_acc+"\"}</script>");
+            //out.print("<script>function ua(){return "+ua+"}</script>");     //WARNING
 
-            try {
+        try {
 
-                PreparedStatement pstmt = conn.prepareStatement("select * from pims_user where `user_mail` = ?") ;
-                pstmt.setString(1, usr_mail);
-                ResultSet rs = pstmt.executeQuery();
+            PreparedStatement pstmt =
+                conn.prepareStatement("select * from pims_user where `user_mail` = ?");
+            pstmt.setString(1, post_acc);
+            ResultSet rs = pstmt.executeQuery();
 
-                if(rs.next()){
+            //if we have a user of that name in db
+            if(rs.next()){
+
+                // =========================
+                // pwd hash process...
+                // =========================
+
+                //compare password
+                if(rs.getString("user_passwd").equals(post_pwd)){
+                    ua = rs.getString("user_account");
+                    session.setAttribute("UA",ua);
 
                     // =========================
-                    // pwd hash process...
+                    // How to distinguish between normal user and admin?
+                    // create new cookie storing that infomation
                     // =========================
 
-                    if(rs.getString("user_passwd").equals(pwd)){
-                        UA = rs.getString("user_account");
-                        session.setAttribute("UA",UA);
-                    }
-                    else{
-                        out.print("Who are you??");
-                    }
+                    out.print("<script>alert(\"登入成功\")</script>");
+                    response.setHeader("Refresh" , "1;url=index.jsp");  //maybe we just redirect to index.jsp and then redirect to user/admin page
                 }
                 else{
-                    out.print("Who are you?");
+                    out.print("<script>alert(\"帳號或密-碼錯誤\")</script>");
+                    response.setHeader("Refresh" , "1;url=index.jsp");
                 }
-            } catch (Exception e) {
-                out.print(e.getMessage());
-                out.print("Sorry An Error,Bye");
             }
-        } else out.print("welcome");
-
-        if (UA != null) {
-            response.setHeader("Refresh" , "3;url=index.jsp");
+            else{   //no matching account
+                out.print("<script>alert(\"帳-號或密碼錯誤\")</script>");
+                response.setHeader("Refresh" , "1;url=index.jsp");
+            }
+        } catch (Exception e) {
+            out.print(e.getMessage());
+            out.print("Sorry An Error,Bye");
         }
-    %> 
-    <html> 
-        <head> 
-            <title>Update</title> 
-        </head> 
-        <body>
-            <% if(UA == null){ %>
-            <form action = "login.jsp" method = "post"> 
-                usr: <input type = "text" name= "usr_mail" value = ""> 
-                <br />
-                pwd: <input type = "text" name= "pwd" value = ""> 
-                <br />  
-                <input type = "submit"> 
-            </form> 
-            <!-- <a href="index.jsp">回首頁</a>  -->
-            <% } else { %>
-            <h2>Successfully login!! You will be redirect after 3 seconds!</h2>
-            <% } %>
-        </body> 
-    </html> 
+        
+    %>
