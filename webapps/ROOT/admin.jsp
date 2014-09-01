@@ -1,4 +1,12 @@
 <%@ page contentType="text/html;charset=utf-8"%> 
+<!-- To be trimed -->
+<%
+    String ua = (String) session.getAttribute("UA");
+    if (ua == null) {
+        out.print("<script>alert(\"請先登入\")</script>");
+        response.setHeader("Refresh" , "0;url=index.jsp");
+    }
+%>
     <html lang="zh-TW"><head>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
@@ -116,8 +124,5 @@
         <p>© Company 2014</p>
       </footer>
     </div> <!-- /container -->
-
-
-  
-
-<embed id="xunlei_com_thunder_helper_plugin_d462f475-c18e-46be-bd10-327458d045bd" type="application/thunder_download_plugin" height="0" width="0"></body></html>
+  </body>
+</html>

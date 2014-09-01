@@ -1,4 +1,11 @@
 <%@ page contentType="text/html;charset=utf-8"%> 
+<%
+    String ua = (String) session.getAttribute("UA");
+    if (ua == null) {
+        out.print("<script>alert(\"請先登入\")</script>");
+        response.setHeader("Refresh" , "0;url=index.jsp");
+    }
+%>
 <html lang="zh-TW"><head>
     <!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">

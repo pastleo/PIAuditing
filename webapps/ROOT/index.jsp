@@ -35,7 +35,7 @@
             <div class="col-md-6">
                 <div class="jumbotron">
                   <h1>個資稽核系統</h1>
-                  <p>//Currently, to login as a normal user, access with backdoor.</p>
+                  <p>Currently, to login as a normal user, access with backdoor.</p>
                   <p><a class="btn btn-primary btn-lg" role="button" onclick="alert('先掛著')">使用規範 »</a></p>
                 </div>
             </div>
