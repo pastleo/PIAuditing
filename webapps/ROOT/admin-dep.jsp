@@ -6,7 +6,6 @@
     //     out.print("<script>alert(\"請先登入\")</script>");
     //     response.setHeader("Refresh" , "0;url=index.jsp");
     // }
-    response.sendRedirect("admin-dep.jsp");
 %>
     <html lang="zh-TW"><head>
     <!-- Latest compiled and minified CSS -->
@@ -22,18 +21,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <style>
-      body {
-        position: relative;
-      }
-      div.jumbotron .navbar{
-        top: -60px;
-        transition: all 0.5s ease 0s;
-      }
-      div.jumbotron.small .navbar{
-        top: 0px;
-      }
-    </style>
+    <link rel="stylesheet" href="site.css">
 
     <title>個資稽核系統</title>
   </head>
@@ -97,11 +85,11 @@
           xxx您好
         </div>
         <div class="list-group">
-          <a href="#" class="list-group-item active">單位資料表</a>
-          <a href="#" class="list-group-item">人員資料表</a>
-          <a href="#" class="list-group-item">稽核設定</a>
-          <a href="#" class="list-group-item">行事曆</a>
-          <a href="#" class="list-group-item">事件設定</a>
+          <a href="admin-dep.jsp" class="list-group-item active">單位資料表</a>
+          <a href="admin-person.jsp" class="list-group-item">人員資料表</a>
+          <a href="admin-audit.jsp" class="list-group-item">稽核設定</a>
+          <a href="admin-cal.jsp" class="list-group-item">行事曆</a>
+          <a href="admin-event.jsp" class="list-group-item">事件設定</a>
         </div>
       </div>
       <div class="col-xs-9">
@@ -110,15 +98,24 @@
         <table class="table table-hover">
           <thead>
             <tr>
+              <td>#</td>
               <td>學校</td>
               <td>學院</td>
               <td>學系</td>
-              <td>修改</td>
-              <td>刪除</td>
+              <td colspan="2" style="text-align: center;">動作</td>
+            </tr>
+            <tr class="input">
+              <td class="input-cell">選取</td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td><input type="text" class="form-control"></td>
+              <td class="input-cell"><a href="">新增</a></td>
+              <td class="input-cell"><a href="">刪除</a></td>
             </tr>
           </thead>
           <tbody>
             <tr>
+              <td>1</td>
               <td>中興大學</td>
               <td>理學院</td>
               <td>資工系</td>
@@ -126,6 +123,7 @@
               <td><a href="">刪除</a></td>
             </tr>
             <tr>
+              <td>2</td>
               <td>中興大學</td>
               <td>理學院</td>
               <td>資工系</td>
@@ -155,26 +153,7 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <script>
-      $(document).ready(function(){
-        var small = false
-        // $('div.jumbotron div.navbar').hide();
-        $( window ).scroll(function(){
-          // console.log($('body').scrollTop());
-          if(small != ($('body').scrollTop() > 50)){
-            small = $('body').scrollTop() > 50;
-            if (small) {
-              $('div.jumbotron').addClass('small');
-              // $('div.jumbotron div.navbar').slideDown();
-            }
-            else{
-              $('div.jumbotron').removeClass('small');
-              // $('div.jumbotron div.navbar').slideUp();
-            }
-          }
-        });
-      });
-    </script>
+    <script src="site.js"></script>
 
   </body>
 </html>

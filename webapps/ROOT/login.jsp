@@ -1,4 +1,6 @@
     <%@ page contentType="text/html;charset=utf-8"%>
+    <%@ page import="java.security.*"%> 
+    
     <%@ include file = "db_init.jsp"%> 
 
     <% 
@@ -23,6 +25,18 @@
                 // =========================
 
                 //compare password
+                // Create MD5 Hash
+                MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+                digest.update(post_pwd.getBytes());
+                byte messageDigest[] = digest.digest();
+                
+                // Create Hex String
+                StringBuffer hexString = new StringBuffer();
+                for (int i=0; i<messageDigest.length; i++)
+                    hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+                post_pwd = hexString.toString();
+
+
                 if(rs.getString("user_passwd").equals(post_pwd)){
                     session.setAttribute("UA", rs.getString("user_account") );
 
