@@ -9,15 +9,16 @@
 <body>
 	<h1>HELLO!!!</h1>
 	<% 
-
 		String tar = request.getParameter("v");
-		
 	%>
-	<p>tar=<%=String.valueOf(tar)%></p>
+	<p>target = <%=String.valueOf(tar)%></p>
+	<p>This page is supposed to forwarding our user.</p>
+	<p>For now, append "/?v=view" at the end of URL to see webpage.</p>
+	<p>BTW, linkings between pages are breaked at the moment.</p>
 	<%
 	if(tar != null) {
 		if(tar.equals("view")) {  %>
-			<jsp:forward page="WEB-INF/new/admin-dep.jsp" />
+			<jsp:forward page="WEB-INF/front/admin-dep.jsp" />
 			
 		<% }} %>
 	
