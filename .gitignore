@@ -1,4 +1,4 @@
 .DS_Store
 Thumbs.db
 .vagrant*
-webapps/ROOT/db_init.jsp
+webapps/ROOT/WEB-INF/back/db_init.jsp
