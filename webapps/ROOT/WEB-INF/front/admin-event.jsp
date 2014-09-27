@@ -85,11 +85,11 @@
           xxx您好
         </div>
         <div class="list-group">
-          <a href="admin-dep.jsp" class="list-group-item">單位資料表</a>
-          <a href="admin-person.jsp" class="list-group-item">人員資料表</a>
-          <a href="admin-audit.jsp" class="list-group-item">稽核設定</a>
-          <a href="admin-cal.jsp" class="list-group-item">行事曆</a>
-          <a href="admin-event.jsp" class="list-group-item active">事件設定</a>
+          <a href="/?v=1" class="list-group-item">單位資料表</a>
+          <a href="/?v=2" class="list-group-item">人員資料表</a>
+          <a href="/?v=3" class="list-group-item">稽核設定</a>
+          <a href="/?v=4" class="list-group-item">行事曆</a>
+          <a href="/?v=5" class="list-group-item active">事件設定</a>
         </div>
       </div>
       <div class="col-xs-9">
