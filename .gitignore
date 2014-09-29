@@ -1,4 +1,5 @@
 .DS_Store
 Thumbs.db
 .vagrant*
-webapps/ROOT/WEB-INF/back/db_init.jsp
+/pia/.gradle
+/pia/build

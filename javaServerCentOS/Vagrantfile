@@ -24,7 +24,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
-  config.vm.network "private_network", ip: "192.168.8.13"
+  config.vm.network "private_network" , ip: "192.168.8.13"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -42,7 +42,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.synced_folder "../_provision.file", "/provision.file"
 
   # for PastLeo directory
-  config.vm.synced_folder "../webapps", "/webapps", mount_options: ["dmode=777,fmode=777"]
+  config.vm.synced_folder "../pia", "/pia", mount_options: ["dmode=777,fmode=777"]
 
   # Commit Test
 
@@ -67,16 +67,18 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision "shell", path: "../_provision.sh/yum_repo.sh"
   config.vm.provision "shell", path: "../_provision.sh/basic.sh"
   config.vm.provision "shell", path: "../_provision.sh/tmux.sh"
-  # config.vm.provision "shell", path: "../_provision.sh/adminPastLeo.sh"
-  config.vm.provision "shell", path: "../_provision.sh/JavaServer.sh"
   config.vm.provision "shell", path: "../_provision.sh/mysql.sh"
 
-  config.vm.provision "shell", inline: "mv /var/lib/tomcat/webapps /var/lib/tomcat/webapps_ori"
-  config.vm.provision "shell", inline: "ln -s /webapps /var/lib/tomcat/"
+  # config.vm.provision "shell", path: "../_provision.sh/JavaServer.sh"
+  config.vm.provision "shell", path: "../_provision.sh/jdk.sh"
+  config.vm.provision "shell", path: "../_provision.sh/gradle.sh"
 
-  config.vm.provision "shell", inline: "service tomcat start"
+  # config.vm.provision "shell", inline: "mv /var/lib/tomcat/webapps /var/lib/tomcat/webapps_ori"
+  # config.vm.provision "shell", inline: "ln -s /webapps /var/lib/tomcat/"
+
+  # config.vm.provision "shell", inline: "service tomcat start"
   config.vm.provision "shell", inline: "service mysqld start"
-  config.vm.provision "shell", inline: "chkconfig tomcat on"
+  # config.vm.provision "shell", inline: "chkconfig tomcat on"
   config.vm.provision "shell", inline: "chkconfig mysqld on"
 
   # Hostname for virtual machine
