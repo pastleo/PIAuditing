@@ -8,6 +8,13 @@ PIAuditing
  * 複製 `webapps/ROOT/db_init.example.jsp` => `webapps/ROOT/db_init.jsp`
  * 修改 `webapps/ROOT/db_init.jsp` 的變數值 `db`,`host`,`user`,`pwd`
 
+## 部屬並且啟動 Web App
+
+ 1. `cd /pia`
+ 2. `sh start.sh` 即可
+
+> 如果做了修改，那你必須要先 `Ctrl-C` 把啟動的 Server 關閉，並重新部署啟動 Web App
+
 ## 開發學習文章
 
  * [JSP tag library -- JSTL](https://jstl.java.net/)
