@@ -19,12 +19,20 @@ package pia.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pia.model.*;
  
 @Controller
 public class AdminController {
     @RequestMapping("hello")
     public String hello(@RequestParam("user") String user, Model m) {
         m.addAttribute("user", user);
+
+        try{
+            DB_base.init_db();
+        }
+        catch(Exception e){
+            return "hello1";
+        }
         return "hello";
     }
 
