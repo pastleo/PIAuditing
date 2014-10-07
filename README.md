@@ -11,6 +11,7 @@ PIAuditing
 ## 啟動自動部署的虛擬機 `javaServerCentOS`
 
  * 到 `vagrant` 的[官方網站](https://www.vagrantup.com/)下載安裝 `vagrant`
+ * 本虛擬機設定採用`virtualbox`作為底層提供者，因此也必須去[官方網站](https://www.virtualbox.org)下載安裝之
  * `cd` 到 `[本專案目錄]/javaServerCentOS`
  * `vagrant up` 啟動並自動部署機器
 
