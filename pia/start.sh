@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 
-gradle tomcatRunWar
+gradle tomcatRun
 
 # ------------------------------------------------------------
 # All tasks runnable from root project

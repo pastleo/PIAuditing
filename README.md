@@ -8,10 +8,19 @@ PIAuditing
  * 複製 `webapps/ROOT/db_init.example.jsp` => `webapps/ROOT/db_init.jsp`
  * 修改 `webapps/ROOT/db_init.jsp` 的變數值 `db`,`host`,`user`,`pwd`
 
+## 啟動自動部署的虛擬機 `javaServerCentOS`
+
+ * 到 `vagrant` 的[官方網站](https://www.vagrantup.com/)下載安裝 `vagrant`
+ * `cd` 到 `[本專案目錄]/javaServerCentOS`
+ * `vagrant up` 啟動並自動部署機器
+
 ## 部屬並且啟動 Web App
 
- 1. `cd /pia`
- 2. `sh start.sh` 即可
+ * 機器啟動之後，`vagrant ssh` 進入機器
+ * `cd /pia`
+ * `sh start.sh` 即可啟動
+ * 先泡杯咖啡，等一下...
+ * 看到 `The Server is running at http://localhost:8080/pia` 之後，在瀏覽器上輸入 `192.168.8.13:8080/pia/hello?user=pia` 即可看到最基礎頁面
 
 > 如果做了修改，那你必須要先 `Ctrl-C` 把啟動的 Server 關閉，並重新部署啟動 Web App
 
