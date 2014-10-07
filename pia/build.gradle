@@ -20,6 +20,7 @@ dependencies {
     compile 'org.springframework:spring-webmvc:4.0.0.RELEASE'
     compile 'org.springframework:spring-jdbc:4.0.0.RELEASE'
     compile 'org.hsqldb:hsqldb:2.3.1'
+    compile 'org.codehaus.jackson:jackson-mapper-asl:1.9.13'
     providedCompile 'javax.servlet:javax.servlet-api:3.1.0'
     def tomcatVersion = '7.0.11'
     tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
@@ -28,3 +29,6 @@ dependencies {
         exclude group: 'org.eclipse.jdt.core.compiler', module: 'ecj'
     }
 }
+
+// All availible packages:
+// http://mvnrepository.com
