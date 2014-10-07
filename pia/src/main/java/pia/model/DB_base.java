@@ -14,8 +14,9 @@ public class DB_base {
         String pwd="";
 
         Class.forName("com.mysql.jdbc.Driver").newInstance(); 
-        
+        //建立一個聯結物件 
         return DriverManager.getConnection(url,user,pwd); 
     }
+
 
 }
