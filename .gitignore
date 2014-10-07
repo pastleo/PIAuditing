@@ -3,3 +3,4 @@ Thumbs.db
 .vagrant*
 /pia/.gradle
 /pia/build
+pia/src/main/webapp/test/
