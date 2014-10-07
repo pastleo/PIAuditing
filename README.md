@@ -5,8 +5,7 @@ PIAuditing
 
 ## 初始化
 
- * 複製 `webapps/ROOT/db_init.example.jsp` => `webapps/ROOT/db_init.jsp`
- * 修改 `webapps/ROOT/db_init.jsp` 的變數值 `db`,`host`,`user`,`pwd`
+ * `git clone [本專案 Git 網址]`
 
 ## 啟動自動部署的虛擬機 `javaServerCentOS`
 
