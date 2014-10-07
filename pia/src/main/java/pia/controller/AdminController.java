@@ -1,30 +1,19 @@
 package pia.controller;
- 
-// import java.io.*;
-// import javax.servlet.ServletException;
-// import javax.servlet.annotation.WebServlet;
-// import javax.servlet.http.*;
- 
-// @WebServlet(urlPatterns={"/hello"})
-// public class HelloWorld extends HttpServlet {
-//     @Override
-//     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-//                         throws ServletException, IOException {
-//         String user = req.getParameter("user"); // 取得請求參數
-//         req.setAttribute("user", user);         // 設定請求屬性
-//         req.getRequestDispatcher("hello.jsp").forward(req, resp); // 轉發至 JSP
-//     }
-// }
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
+import javax.servlet.http.*;
+
 import pia.model.*;
- 
+import pia.json.*;
+
 @Controller
 public class AdminController {
     @RequestMapping("hello")
     public String hello(@RequestParam("user") String user, Model m) {
+
+        // things passed to the view
         m.addAttribute("user", user);
 
         try{
@@ -40,4 +29,30 @@ public class AdminController {
     public String view(Model m) {
         return "/WEB-INF/view/admin/master";
     }
+
+    @RequestMapping(value = "/welcome/{userId}/{userName}", method = RequestMethod.GET)
+    public @ResponseBody JsonTest test(
+        @PathVariable("userId") String userId,
+        @PathVariable("userName") String userName,
+        HttpSession s,
+        Model m) {
+
+        int number;
+        if (s.getAttribute("number") == null)
+            number = 0;
+        else
+            number = (int) s.getAttribute("number");
+
+        number++;
+        s.setAttribute("number" , number );
+
+        JsonTest j = new JsonTest();
+        j.name = userId + ":" + userName;
+        j.array = new String[]{"HsinE", "PastLeo","Emma"};
+        j.number = number;
+
+        return j;
+    }
+
 }
+
