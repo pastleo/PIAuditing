@@ -54,5 +54,9 @@ public class AdminController {
         return j;
     }
 
+    @RequestMapping("test/{page}")
+    public String testRoute(@PathVariable("page") String page) {
+        return "test/" + page;
+    }
 }
 

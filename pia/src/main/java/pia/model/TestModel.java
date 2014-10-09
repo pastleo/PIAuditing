@@ -8,38 +8,27 @@ public class TestModel{
 	private static String tableName = "test";
 	private static String pk = "id";
 	private static int count = 4;
-	private static PreparedStatement all;
+	private static PreparedStatement all = null;
 
 	public static void init(){
-		all = DbInit.getStatement("SELECT * from ?");
-		try{
-			all.setString(1,tableName);	
-		}catch(Exception e){}
+		all = DbInit.getStatement("SELECT * from " + tableName);
 	}
 
 	public static Vector<String[]> getAll() throws Exception{
-		//Or do not return ResultSet
-		PreparedStatement stm;
+		if(all==null) init();
 		ResultSet rs;
 		try{
-			stm = DbInit.getStatement("SELECT * from ?");
-		}catch(Exception e){throw new Exception("Fail statement");}
-		try{
-			stm.setString(1,tableName);
-		}catch(Exception e){throw new Exception("Fail tableName");}
-		try{
-			rs = stm.executeQuery();
-		}catch(Exception e){throw new Exception("Fail query");}
-		try{
+			rs = all.executeQuery();
+		
 			Vector<String[]> v = new Vector<String[]>();
 			while(rs.next()){
 				String a[] = new String[count];
 				for(int i=0; i<count; ++i)
-					a[i] = rs.getString(i);
+					a[i] = rs.getString(i+1);
 				v.add(a);
 			}
 			return v;
-		}catch(Exception e){throw new Exception("Fail getAll()");}
+		}catch(Exception e){throw e;}
 		
 	}
 

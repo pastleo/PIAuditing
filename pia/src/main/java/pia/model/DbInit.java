@@ -6,11 +6,12 @@ public class DbInit{
 	private static Connection connection = null;
 
 	private static void init(){
-		String db = "mysql";
-		String host = "localhost"; //"localhost"
+		String db = "pims";
+		String host = "140.120.14.76"; //"localhost"
 		String url="jdbc:mysql://" + host + ":3306/" + db;
-		String user="root";
-		String pwd="";
+		String user="pims";
+		String pwd="pimsdbs"; 
+
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance(); 
 			connection = DriverManager.getConnection(url,user,pwd); 
