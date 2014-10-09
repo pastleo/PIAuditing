@@ -16,6 +16,7 @@ public class DbInit{
 			Class.forName("com.mysql.jdbc.Driver").newInstance(); 
 			connection = DriverManager.getConnection(url,user,pwd); 
 		}catch(Exception e){
+			throw e;
 			//gg	
 		}
 		return;
@@ -30,7 +31,7 @@ public class DbInit{
 		if( connection == null) init();
 		try{
 			return connection.prepareStatement(sql);
-		}catch(Exception e){}
+		}catch(Exception e){throw e;}
 		return null;
 	}
 }

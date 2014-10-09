@@ -10,12 +10,9 @@ public class TestModel{
 	private static int count = 4;
 	private static PreparedStatement all = null;
 
-	public static void init(){
-		all = DbInit.getStatement("SELECT * from " + tableName);
-	}
-
 	public static Vector<String[]> getAll() throws Exception{
-		if(all==null) init();
+		PreparedStatement all =
+			DbInit.getStatement("SELECT * from " + tableName);
 		ResultSet rs;
 		try{
 			rs = all.executeQuery();
