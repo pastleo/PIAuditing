@@ -8,7 +8,7 @@ public class DbInit{
 	private static void init(){
 		String db = "pims";
 		String host = "140.120.14.76"; //"localhost"
-		String url="jdbc:mysql://" + host + ":3306/" + db;
+		String url="jdbc:mysql://" + host + ":3306/" + db +"?useUnicode=true&characterEncoding=utf-8";
 		String user="pims";
 		String pwd="pimsdbs"; 
 
@@ -16,7 +16,7 @@ public class DbInit{
 			Class.forName("com.mysql.jdbc.Driver").newInstance(); 
 			connection = DriverManager.getConnection(url,user,pwd); 
 		}catch(Exception e){
-			throw e;
+			
 			//gg	
 		}
 		return;
@@ -27,11 +27,11 @@ public class DbInit{
 		return connection;
 	}
 
-	public static PreparedStatement getStatement(String sql){
+	public static PreparedStatement getStatement(String sql) {
 		if( connection == null) init();
 		try{
 			return connection.prepareStatement(sql);
-		}catch(Exception e){throw e;}
+		}catch(Exception e){}
 		return null;
 	}
 }

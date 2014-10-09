@@ -30,7 +30,7 @@
 			String sql = String.format("insert into person (p_name,p_mail,dept_id,p_pass) values ('%s','%s','%s','%s')"
 			,tmp[0],tmp[1],tmp[2],tmp[3]);
 			out.print("<br>" + sql);
-			//st.executeUpdate(sql);
+			st.executeUpdate(sql);
 		}
 	%>
 </body>
