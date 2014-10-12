@@ -20,7 +20,7 @@ public class AdminController {
           s.removeAttribute("message");
         }
 
-        if(s.getAttribute("p_id") == null){
+        if(s.getAttribute("UA") == null){
           return "redirect:logout";
         }
 

@@ -18,6 +18,12 @@ public class MainController {
         if (ua != null) {
             return "redirect:admin";
         }
+
+        Object message = s.getAttribute("message");
+        if(message != null){
+          m.addAttribute("message", message);
+          s.removeAttribute("message");
+        }
         return "/WEB-INF/view/main/index";
     }
 
@@ -79,7 +85,7 @@ public class MainController {
 
     @RequestMapping("/logout")
     public String logout(HttpSession s,Model m) {
-      s.removeAttribute("p_id");
+      s.removeAttribute("UA");
       s.setAttribute("message", "已登出！" );
       return "/WEB-INF/view/main/index";
     }
