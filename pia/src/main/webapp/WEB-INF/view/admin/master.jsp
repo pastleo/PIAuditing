@@ -12,9 +12,7 @@
       text-align: center;
     }
 
-    div.panel-body.editing{
-      display: none;
-    }
+
 
     table.table tr.sample{
       display: none;
@@ -28,8 +26,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script>
 
 
-  <script src="%E5%80%8B%E8%B3%87%E7%A8%BD%E6%A0%B8%E7%B3%BB%E7%B5%B1_files/moment-with-locales.js"></script>
-    <script src="%E5%80%8B%E8%B3%87%E7%A8%BD%E6%A0%B8%E7%B3%BB%E7%B5%B1_files/fullcalendar.js"></script>
 
     <script>
       var dep_data = [
@@ -68,15 +64,31 @@
             for(j in e){
               tmp.find(".cell-" + j).text(e[j]);
             }
+
+            tmp.find("td.action a").attr("id","edit" + e.id)
+
             tmp.removeClass("sample");
             tbody.append(tmp);
           }
           var tr_height = table.find("tr").eq(0).height();
 
-          table.find("td.action a[href=#edit]").click(function(){
-            console.log("123");
-            panel.find("div.editing").slideToggle();
+          $("a[id^=edit]").click(function () {
+              var par=$(this).parents('tr')
+              if ($(this).parents('tr').next().hasClass( "form" )) {
+                  $(this).parents('tr').next().remove()
+              } else {
+                  //$(this).parents('tr').after("<tr class='form'><td colspan='5'>THIS IS YOUR FORM</td></tr>")
+                  //panel.find("div.editing").slideToggle();
+                  $(this).parents('tr').after("<tr class='form'><td colspan='5'>test </td></tr>");
+                  var type = ($(this).parents(".tab-pane").attr("id"));
+
+                  console.log(type);
+                  $(this).parents('tr').next().load("test/form.jsp #form_dep");
+
+              };
           });
+
+
         }
         init_dep();
 
