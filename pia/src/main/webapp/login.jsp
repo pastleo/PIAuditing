@@ -1,15 +1,26 @@
     <%@ page contentType="text/html;charset=utf-8"%>
-    <%@ page import="java.security.*"%> 
+    <%@ page import="java.security.*"%>
     <%@ page import="pia.model.DbInit" %>
     <%@ page import="java.sql.*" %>
 
-    <% 
+    <%
         /*  session["UA"] uses "user_account"
             login account uses "user_mail"
             login password uses "user_passwd"     */
         String post_acc = request.getParameter("usr_mail");
         String post_pwd = request.getParameter("pwd");
 
+        MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+        digest.update(post_pwd.getBytes());
+        byte messageDigest[] = digest.digest();
+
+        StringBuffer hexString = new StringBuffer();
+                for (int i=0; i<messageDigest.length; i++)
+                    hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+                post_pwd = hexString.toString();
+
+                out.print(post_pwd);
+        /*
         try {
 
             PreparedStatement pstmt =
@@ -29,7 +40,7 @@
                 MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
                 digest.update(post_pwd.getBytes());
                 byte messageDigest[] = digest.digest();
-                
+
                 // Create Hex String
                 StringBuffer hexString = new StringBuffer();
                 for (int i=0; i<messageDigest.length; i++)
@@ -61,5 +72,5 @@
             out.print(e.getMessage());
             out.print("Sorry An Error,Bye");
         }
-        
+        */
     %>

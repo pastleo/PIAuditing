@@ -86,7 +86,7 @@
               </li>
             </ul> -->
             <ul class="nav navbar-nav navbar-right">
-              <li><a href="logout.jsp">登出</a></li>
+              <li><a href="logout">登出</a></li>
             </ul>
           </div>
         </div>
@@ -94,6 +94,12 @@
     </div>
 
     <div class="container">
+      <%
+        Object message = request.getAttribute("message");
+        if(message != null){
+          %>
+        <div class="well">${message}</div>
+      <% } %>
       <jsp:doBody/>
     </div> <!-- /container -->
 

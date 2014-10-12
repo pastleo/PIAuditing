@@ -2,18 +2,33 @@ package pia.model;
 
 import java.sql.*;
 import java.util.Vector;
-//import pia.model.DbInit;
+import pia.model.*;
 
-public abstract class BaseModel{
-	protected static String tableName = null;
-	protected static String pk = null;
+public class Person extends BaseModel {
+	protected static PreparedStatement all;
+	private static int count = 8;
 
-	public BaseModel(String tn,String pk){
-		this.tableName = tn;
-		this.pk = pk;
+	public Person(){
+		super("person","p_id");
 	}
+	public static Vector<String[]> getAll() throws Exception{
+		PreparedStatement all =
+			DbInit.getStatement("SELECT * from " + tableName);
+		ResultSet rs;
+		try{
+			rs = all.executeQuery();
 
-	// public static Vector<String[]> getAll() throws Exception {return null;}
+			Vector<String[]> v = new Vector<String[]>();
+			while(rs.next()){
+				String a[] = new String[count];
+				for(int i=0; i<count; ++i)
+					a[i] = rs.getString(i+1);
+				v.add(a);
+			}
+			return v;
+		}catch(Exception e){throw e;}
+
+	}
 
 	public static void delete(String id){
 		PreparedStatement del =

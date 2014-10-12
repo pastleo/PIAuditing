@@ -10,23 +10,20 @@ import pia.json.*;
 
 @Controller
 public class AdminController {
-    @RequestMapping("hello")
-    public String hello(@RequestParam("user") String user, Model m) {
-
-        // things passed to the view
-        m.addAttribute("user", user);
-
-        try{
-            DB_base.init_db();
-        }
-        catch(Exception e){
-            return "hello1";
-        }
-        return "hello";
-    }
 
     @RequestMapping("admin")
-    public String view(Model m) {
+    public String view(HttpSession s,Model m) {
+
+        Object message = s.getAttribute("message");
+        if(message != null){
+          m.addAttribute("message", message);
+          s.removeAttribute("message");
+        }
+
+        if(s.getAttribute("p_id") == null){
+          return "redirect:logout";
+        }
+
         return "/WEB-INF/view/admin/master";
     }
 
@@ -59,4 +56,3 @@ public class AdminController {
         return "test/" + page;
     }
 }
-
