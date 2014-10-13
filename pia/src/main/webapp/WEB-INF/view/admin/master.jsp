@@ -43,6 +43,52 @@
         }
       ];
 
+      function init_person(){
+        var panel = $("#person div.panel");
+        var table = $("#person table");
+        var sample = table.find("tr.sample.data");
+        var form_sample = table.find("tr.sample.form");
+        var tbody = table.find("tbody");
+        var tmp,e;
+
+        function edit_action(){
+          var par=$(this).parents('tr');
+          console.log(par);
+          if (par.next().hasClass( "form" )) {
+              console.log("123");
+              par.next().remove()
+          } else {
+              var form = form_sample.clone();
+              form.removeClass("sample");
+
+              par.after(form);
+          };
+        }
+
+        $.ajax({
+          url: "/pia/admin/person",
+          success: function(data){
+            var person_data = data.data;
+            for(k in person_data){
+              tmp = sample.clone();
+              e = person_data[k];
+              tmp.find("td.cell").each(function(){
+                $(this).text(e[$(this).attr("field")]);
+              });
+              tmp.data(e);
+              tmp.find("td.action a").attr("id","edit" + e.p_id).click(edit_action);
+
+              tmp.removeClass("sample");
+              tbody.append(tmp);
+            }
+            var tr_height = table.find("tr").eq(0).height();
+
+            //$("a[id^=edit]").click(edit_action);
+          },
+        });
+      }
+
+
       $(document).ready(function() {
         // page is now ready, initialize the calendar...
         $("a[href=#cal]").on('shown.bs.tab',function(){
@@ -91,6 +137,7 @@
 
         }
         init_dep();
+        init_person();
 
         //$("a[href=#dep]").on('shown.bs.tab',);
       });

@@ -28,23 +28,52 @@ public class AdminController {
     }
 
     @RequestMapping(value = "/admin/person", method = RequestMethod.GET)
-    public @ResponseBody Person[] getAllPerson(
+    public @ResponseBody AjaxGetResult getAllPerson(
         HttpSession s,
         Model m) {
-
-        RestfulModel r = new RestfulModel();
-
-        if(s.getAttribute("UA") == null){
-          r.status = "forbidden";
-          return r;
-        }
+        AjaxGetResult r = new AjaxGetResult();
         try{
-            r.data = Person.getAll();
-            r.status = "success";
+            if(s.getAttribute("UA") == null)
+                throw new Exception("You havent login!");
+
+            Object message = s.getAttribute("message");
+            if(message != null){
+                r.setMsg((String)message);
+                s.removeAttribute("message");
+            }
+
+            r.setData(Person.getAll());
+            r.setStatus("success");
         }catch(Exception e){
-            r.status = "fail:" + e.getMessage();
+            r.setStatus("fail");
+            r.setMsg((String)e.getMessage());
         }
         return r;
+    }
+
+    @RequestMapping(value = "/admin/person/{id}", method = RequestMethod.GET)
+    public String getPersonForm(
+        @PathVariable("id") String id,
+        HttpSession s,
+        Model m) {
+        AjaxGetResult r = new AjaxGetResult();
+        try{
+            if(s.getAttribute("UA") == null)
+                return "redirect:logout";
+
+            Object message = s.getAttribute("message");
+            if(message != null){
+                r.setMsg((String)message);
+                s.removeAttribute("message");
+            }
+
+            r.setData(Person.getAll());
+            r.setStatus("success");
+        }catch(Exception e){
+            r.setStatus("fail");
+            r.setMsg(e.getMessage());
+        }
+        return "/WEB-INF/view/admin/form_person";
     }
 
     @RequestMapping(value = "/welcome/{userId}/{userName}", method = RequestMethod.GET)
