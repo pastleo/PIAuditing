@@ -85,8 +85,8 @@ public class MainController {
 
     @RequestMapping("/logout")
     public String logout(HttpSession s,Model m) {
-      s.removeAttribute("UA");
-      s.setAttribute("message", "已登出！" );
+        s.removeAttribute("UA");
+        m.addAttribute("message", "已登出！" );
       return "/WEB-INF/view/main/index";
     }
 

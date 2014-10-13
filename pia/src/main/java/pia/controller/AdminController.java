@@ -27,6 +27,26 @@ public class AdminController {
         return "/WEB-INF/view/admin/master";
     }
 
+    @RequestMapping(value = "/admin/person", method = RequestMethod.GET)
+    public @ResponseBody Person[] getAllPerson(
+        HttpSession s,
+        Model m) {
+
+        RestfulModel r = new RestfulModel();
+
+        if(s.getAttribute("UA") == null){
+          r.status = "forbidden";
+          return r;
+        }
+        try{
+            r.data = Person.getAll();
+            r.status = "success";
+        }catch(Exception e){
+            r.status = "fail:" + e.getMessage();
+        }
+        return r;
+    }
+
     @RequestMapping(value = "/welcome/{userId}/{userName}", method = RequestMethod.GET)
     public @ResponseBody JsonTest test(
         @PathVariable("userId") String userId,
