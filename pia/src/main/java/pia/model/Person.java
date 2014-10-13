@@ -2,73 +2,40 @@ package pia.model;
 
 import java.sql.*;
 import java.util.Vector;
+import java.util.TreeMap;
+import java.util.Map;
 import pia.model.*;
 
 public class Person extends BaseModel {
 	protected static PreparedStatement all;
 	private static int count = 8;
+	private static String tableName = "person";
+	private static String pk = "p_id";
 
 	public Person(){
-		super("person","p_id");
+		// super("person","p_id");
+		// tableName = "person";
 	}
-	public static Vector<String[]> getAll() throws Exception{
+
+	public static Vector< Map<String,String> > getAll() throws Exception{
+		String person[] =
+		{"org_id","dept_id","p_id","p_name","p_phone","p_mail","p_title","p_pass"};
 		PreparedStatement all =
 			DbInit.getStatement("SELECT * from " + tableName);
 		ResultSet rs;
 		try{
 			rs = all.executeQuery();
 
-			Vector<String[]> v = new Vector<String[]>();
+			Vector< Map<String,String> > v = new Vector< Map<String,String> >();
 			while(rs.next()){
-				String a[] = new String[count];
-				for(int i=0; i<count; ++i)
-					a[i] = rs.getString(i+1);
-				v.add(a);
+				Map m = new TreeMap<String,String>();
+				for(String n:person)
+					m.put(n, rs.getString(n) );
+				v.add(m);
 			}
 			return v;
 		}catch(Exception e){throw e;}
+		
 
-	}
-
-	public static void delete(String id){
-		PreparedStatement del =
-			 DbInit.getStatement("DELETE FROM ? WHERE ?=?");
-		try{
-			del.setString(1,tableName);
-			del.setString(2,pk);
-			del.setString(3,id);
-			del.executeQuery();
-		}catch(Exception e){}
-	}
-
-	public static void select(String id){
-		PreparedStatement sel =
-			 DbInit.getStatement("SELECT FROM ? WHERE ?=?");
-		try{
-			sel.setString(1,tableName);
-			sel.setString(2,pk);
-			sel.setString(3,id);
-			sel.executeQuery();
-		}catch(Exception e){}
-	}
-
-	public static void update(String id){
-		PreparedStatement upd =
-			 DbInit.getStatement("UPDATE FROM ? SET ... WHERE ?=?");
-		try{
-			upd.setString(1,tableName);
-			upd.setString(2,pk);
-			upd.setString(3,id);
-			upd.executeQuery();
-		}catch(Exception e){}
-	}
-
-	public static void insert(){
-		PreparedStatement ins =
-			 DbInit.getStatement("INSERT INTO ? VALUES ...");
-		try{
-			ins.setString(1,tableName);
-			ins.executeQuery();
-		}catch(Exception e){}
 	}
 }
