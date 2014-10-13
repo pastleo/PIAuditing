@@ -5,9 +5,9 @@ package pia.model;
 import java.sql.*;
 
 public class DbInit{
-	private static Connection connection = null;
+	private static Connection connection;
 
-	private static void init(){
+	static{
 		String db = "pims";
 		String host = "140.120.14.76"; //"localhost"
 		String url="jdbc:mysql://" + host + ":3306/" + db +"?useUnicode=true&characterEncoding=utf-8";
@@ -17,23 +17,25 @@ public class DbInit{
 		try{
 			Class.forName("com.mysql.jdbc.Driver").newInstance(); 
 			connection = DriverManager.getConnection(url,user,pwd); 
-		}catch(Exception e){
-			
-			//gg	
-		}
-		return;
+		}catch(Exception e){}
 	}
 
 	public static Connection getConnection(){
-		if( connection == null) init();
 		return connection;
 	}
 
 	public static PreparedStatement getStatement(String sql) {
-		if( connection == null) init();
 		try{
 			return connection.prepareStatement(sql);
 		}catch(Exception e){}
 		return null;
+	}
+
+	public static void update(String sql) throws Exception{
+		connection.createStatement().executeUpdate(sql);
+	}
+
+	public static ResultSet query(String sql) throws Exception{
+		return connection.createStatement().executeQuery(sql);
 	}
 }
