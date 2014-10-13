@@ -79,10 +79,10 @@
               } else {
                   //$(this).parents('tr').after("<tr class='form'><td colspan='5'>THIS IS YOUR FORM</td></tr>")
                   //panel.find("div.editing").slideToggle();
-                  $(this).parents('tr').after("<tr class='form'><td colspan='5'>test </td></tr>");
-                  var type = ($(this).parents(".tab-pane").attr("id"));
+                  $(this).parents('tr').after("<tr class='form'><td colspan='5'></td></tr>");
+                  //var type = "admin/" + ($(this).parents(".tab-pane").attr("id")) + "/" +  ;
 
-                  console.log(type);
+                  //console.log(type);
                   $(this).parents('tr').next().load("test/form.jsp #form_dep");
 
               };

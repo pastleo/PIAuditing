@@ -2,19 +2,22 @@
 
 <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">單位資料表</div>
+  <div class="panel-heading" style="height: 55px; line-height: 34px;">
+    單位資料表
+
+      <button type="button" class="btn btn-primary pull-right">
+        ＋ 新增
+      </button>
+
+  </div>
   <div class="panel-body">
-    <div class="col-lg-8">
+    <div class="col-lg-12">
       <div class="input-group">
         <span class="input-group-addon">filter</span>
         <input type="text" class="form-control">
       </div><!-- /input-group -->
     </div><!-- /.col-lg-12 -->
-    <div class="col-lg-4">
-      <button type="button" class="btn btn-primary btn-block">
-        ＋ 新增
-      </button>
-    </div>
+
   </div>
 
   <!-- Table -->
