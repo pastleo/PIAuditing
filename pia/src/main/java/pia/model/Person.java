@@ -68,7 +68,7 @@ public class Person extends BaseModel {
 	public void update() throws Exception{
 		verify(org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass);
 
-		String sql = String.format("update %s set org_id=? set dept_id=? set p_name=? set p_phone=? set p_mail=? set p_title=? set p_pass=? where p_id=?","person");
+		String sql = String.format("update %s set org_id=? ,dept_id=? ,p_name=? ,p_phone=? ,p_mail=? ,p_title=? ,p_pass=? where p_id=?","person");
 		PreparedStatement stm = DbInit.getStatement(sql);
 		stm.setString(1, org_id);
 		stm.setString(2, dept_id);
