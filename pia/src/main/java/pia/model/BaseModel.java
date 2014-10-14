@@ -37,7 +37,7 @@ public abstract class BaseModel{
 		}catch(Exception e){throw e;}
 		
 	}
-
+	//old one
 	protected static ResultSet find(String tableName,String pk,String pkv) throws Exception{
 		PreparedStatement sel =
 			DbInit.getStatement(
@@ -45,6 +45,21 @@ public abstract class BaseModel{
 		sel.setString(1,pkv);
 		return sel.executeQuery();
 	}
+	//new one
+	/*
+	protected static Map<String,String> find(String _tn,String _fs[],String pk,String pkv) throws Exception{
+		String sql = String.format("SELECT * from %s where `%s`=?",_tn,pk);
+		PreparedStatement sel =	DbInit.getStatement(sql);
+		sel.setString(1,pkv);
+		ResultSet rs = sel.executeQuery();
+		Map<String,String> ret = new TreeMap<String,String>();
+		if(rs.next())
+			for(String n:_fs)
+				ret.put(n, rs.getString(n) );
+		else
+			return null;
+		return ret;
+	}*/
 	// public static void delete(String id){
 	// 	PreparedStatement del =
 	// 		 DbInit.getStatement("DELETE FROM ? WHERE ?=?");
