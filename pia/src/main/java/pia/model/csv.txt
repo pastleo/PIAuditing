@@ -1,0 +1,14 @@
+audit:
+event_id,org_id,p_id,ad_org_id,ad_dept_id,ad_time_beg,ad_time_end
+
+group:
+org_id,group_id,group_name
+
+event:
+event_id,event_name,event_beg,event_end
+
+dept:
+org_id,group_id,dept_id,dept_name
+
+person:
+org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass
