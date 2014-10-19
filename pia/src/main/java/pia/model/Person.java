@@ -43,7 +43,7 @@ public class Person extends BaseModel {
 	public static void add(String _org_id,String _dept_id,String _p_id,String _p_name,String _p_phone,String _p_mail,String _p_title,String _p_pass) throws Exception{
 		verify(_org_id,_dept_id,_p_id,_p_name,_p_phone,_p_mail,_p_title,_p_pass);
 
-		_p_pass = this.md5(_p_pass);
+		_p_pass = md5(_p_pass);
 
 		String sql1 = String.format("(org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass)");
 		String sql2 = String.format("(?,?,?,?,?,?,?,?)");
@@ -64,7 +64,7 @@ public class Person extends BaseModel {
 	public static void update(String _org_id,String _dept_id,String _p_id,String _p_name,String _p_phone,String _p_mail,String _p_title,String _p_pass) throws Exception{
 		verify(_org_id,_dept_id,_p_id,_p_name,_p_phone,_p_mail,_p_title,_p_pass);
 
-		_p_pass = this.md5(_p_pass);
+		_p_pass = md5(_p_pass);
 
 		String set = "org_id=?,dept_id=?,p_name=?,p_phone=?,p_mail=?,p_title=?,p_pass=? where p_id=?";
 		String sql = String.format("update %s set %s",m_tn,set);

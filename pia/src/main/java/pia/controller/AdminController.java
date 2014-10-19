@@ -62,7 +62,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -103,7 +103,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -141,7 +141,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -177,7 +177,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -204,7 +204,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -238,7 +238,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -270,7 +270,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -297,7 +297,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -330,7 +330,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -361,7 +361,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
@@ -388,7 +388,7 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500((String)e.getMessage());
+            throw new Http500();
         }
         return r;
     }
