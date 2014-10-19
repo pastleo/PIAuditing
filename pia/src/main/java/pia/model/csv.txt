@@ -1,4 +1,4 @@
-audit:
+auditor:
 event_id,org_id,p_id,ad_org_id,ad_dept_id,ad_time_beg,ad_time_end
 
 group:
