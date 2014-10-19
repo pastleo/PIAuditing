@@ -3,6 +3,8 @@ import java.sql.*;
 import java.util.*;
 import pia.model.*;
 
+import java.security.*;
+
 public class Person extends BaseModel {
 
 	private static String m_tn = "person";
@@ -40,6 +42,9 @@ public class Person extends BaseModel {
 
 	public static void add(String _org_id,String _dept_id,String _p_id,String _p_name,String _p_phone,String _p_mail,String _p_title,String _p_pass) throws Exception{
 		verify(_org_id,_dept_id,_p_id,_p_name,_p_phone,_p_mail,_p_title,_p_pass);
+
+		_p_pass = this.md5(_p_pass);
+
 		String sql1 = String.format("(org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass)");
 		String sql2 = String.format("(?,?,?,?,?,?,?,?)");
 		String sql = String.format("insert into %s %s values %s ",m_tn,sql1,sql2);
@@ -58,6 +63,8 @@ public class Person extends BaseModel {
 
 	public static void update(String _org_id,String _dept_id,String _p_id,String _p_name,String _p_phone,String _p_mail,String _p_title,String _p_pass) throws Exception{
 		verify(_org_id,_dept_id,_p_id,_p_name,_p_phone,_p_mail,_p_title,_p_pass);
+
+		_p_pass = this.md5(_p_pass);
 
 		String set = "org_id=?,dept_id=?,p_name=?,p_phone=?,p_mail=?,p_title=?,p_pass=? where p_id=?";
 		String sql = String.format("update %s set %s",m_tn,set);
@@ -85,6 +92,32 @@ public class Person extends BaseModel {
 		PreparedStatement del = DbInit.getStatement(sql);
 		del.setString(1,_id);
 		del.executeUpdate();
+	}
+
+	public Vector< Map<String,String> > get(){
+		Vector< Map<String,String> > v = new Vector< Map<String,String> >();
+		Map m = new TreeMap<String,String>();
+		m.put("org_id", this.org_id);
+		m.put("dept_id", this.dept_id);
+		m.put("p_id", this.p_id);
+		m.put("p_name", this.p_name);
+		m.put("p_phone", this.p_phone);
+		m.put("p_mail", this.p_mail);
+		m.put("p_title", this.p_title);
+		m.put("p_pass", this.p_pass);
+		v.add(m);
+
+		return v;
+	}
+
+	private static String md5(String src){
+		MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+		digest.update(src.getBytes());
+		byte messageDigest[] = digest.digest();
+		StringBuffer hexString = new StringBuffer();
+		for (int i=0; i<messageDigest.length; i++)
+		    hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+		return hexString.toString();
 	}
 
 	public String org_id;

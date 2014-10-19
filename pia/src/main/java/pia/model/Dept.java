@@ -62,6 +62,19 @@ public class Dept extends BaseModel {
 		del.setString(1,_id);
 		del.executeUpdate();
 	}
+
+	public Vector< Map<String,String> > get(){
+		Vector< Map<String,String> > v = new Vector< Map<String,String> >();
+		Map m = new TreeMap<String,String>();
+		m.put("org_id", this.org_id);
+		m.put("group_id", this.group_id);
+		m.put("dept_id", this.dept_id);
+		m.put("dept_name", this.dept_name);
+		v.add(m);
+
+		return v;
+	}
+
 	public String org_id;
 	public String group_id;
 	public String dept_id;

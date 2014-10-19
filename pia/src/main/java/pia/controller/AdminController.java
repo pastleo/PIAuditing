@@ -8,6 +8,7 @@ import java.security.*;
 
 import pia.model.*;
 import pia.json.*;
+import pia.httpStatus.*;
 
 @Controller
 public class AdminController {
@@ -28,34 +29,47 @@ public class AdminController {
         return "/WEB-INF/view/admin/master";
     }
 
-    // Person Resources ====================
-
-    @RequestMapping(value = "/admin/person", method = RequestMethod.GET)
-    public @ResponseBody AjaxResult getAllPerson(
+    @RequestMapping(value = "/admin/{type}", method = RequestMethod.GET)
+    public @ResponseBody AjaxResult getAll(
+        @PathVariable("type") String type,
         HttpSession s,
         Model m) {
         AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
+        if(s.getAttribute("UA") == null)
+            throw new Http403("You havent login!");
 
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
+        Object message = s.getAttribute("message");
+        if(message != null){
+            r.setMsg((String)message);
+            s.removeAttribute("message");
+        }
+
+        try{
+            switch(type){
+                case "person":
+                    r.setData(Person.getAll());
+                    break;
+                case "dept":
+                    r.setData(Dept.getAll());
+                case "group":
+                    r.setData(Group.getAll());
+                default:
+                    throw new Http404("unknown type!");
             }
 
-            r.setData(Person.getAll());
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg((String)e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
 
-    @RequestMapping(value = "/admin/person/{id}", method = RequestMethod.GET)
-    public @ResponseBody AjaxResult getAPerson(
+    @RequestMapping(value = "/admin/{type}/{id}", method = RequestMethod.GET)
+    public @ResponseBody AjaxResult getOne(
+        @PathVariable("type") String type,
         @PathVariable("id") String id,
         HttpSession s,
         Model m) {
@@ -70,14 +84,31 @@ public class AdminController {
                 s.removeAttribute("message");
             }
 
-            r.setDataFromPerson(new Person(id));
+            switch(type){
+                case "person":
+                    r.setData((new Person(id)).get());
+                    break;
+                case "dept":
+                    r.setData((new Dept(id)).get());
+                    break;
+                case "group":
+                    r.setData((new Group(id)).get());
+                    break;
+                default:
+                    throw new Http404("unknown type!");
+            }
+
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg(e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
+
+    // ====================
 
     @RequestMapping(value = "/admin/person/", method = RequestMethod.POST)
     public @ResponseBody AjaxResult createPerson(
@@ -103,47 +134,23 @@ public class AdminController {
                 s.removeAttribute("message");
             }
 
-            // =========================
-            // pwd hash process...
-            // =========================
-
-            //compare password
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(p_pass.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            p_pass = hexString.toString();
-
-            Person.add(
-                org_id,
-                dept_id,
-                p_id,
-                p_name,
-                p_phone,
-                p_mail,
-                p_title,
-                p_pass
-            );
+            Person.add(org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass);
 
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg(e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
 
     @RequestMapping(value = "/admin/person/{p_id}", method = RequestMethod.POST)
     public @ResponseBody AjaxResult updatePerson(
-        @PathVariable("p_id") String p_id_ori,
+        @PathVariable("p_id") String p_id,
         @RequestParam("org_id") String org_id,
         @RequestParam("dept_id") String dept_id,
-        @RequestParam("p_id") String p_id_new,
         @RequestParam("p_name") String p_name,
         @RequestParam("p_phone") String p_phone,
         @RequestParam("p_mail") String p_mail,
@@ -163,38 +170,14 @@ public class AdminController {
                 s.removeAttribute("message");
             }
 
-            // =========================
-            // pwd hash process...
-            // =========================
-
-            //compare password
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(p_pass.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            p_pass = hexString.toString();
-
-            Person p = new Person(p_id_ori);
-            p.org_id = org_id;
-            p.dept_id = dept_id;
-            p.p_id = p_id_new;
-            p.p_name = p_name;
-            p.p_phone = p_phone;
-            p.p_mail = p_mail;
-            p.p_title = p_title;
-            p.p_pass = p_pass;
-
-            p.save();
+            Person.update(org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass);
 
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg(e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
@@ -217,21 +200,26 @@ public class AdminController {
 
             Person.delete(id);
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg(e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
 
-    // Person Resources end ================
+    // ====================
 
-    // Dept Resources ====================
-
-    @RequestMapping(value = "/admin/person", method = RequestMethod.GET)
-    public @ResponseBody AjaxResult getAllPerson(
+    @RequestMapping(value = "/admin/dept/", method = RequestMethod.POST)
+    public @ResponseBody AjaxResult createDept(
+        @RequestParam("org_id") String org_id,
+        @RequestParam("group_id") String group_id,
+        @RequestParam("dept_id") String dept_id,
+        @RequestParam("dept_name") String dept_name,
         HttpSession s,
         Model m) {
+
         AjaxResult r = new AjaxResult();
         try{
             if(s.getAttribute("UA") == null)
@@ -243,17 +231,52 @@ public class AdminController {
                 s.removeAttribute("message");
             }
 
-            r.setData(Person.getAll());
+            Dept.add(org_id,group_id,dept_id,dept_name);
+
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg((String)e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
 
-    @RequestMapping(value = "/admin/person/{id}", method = RequestMethod.GET)
-    public @ResponseBody AjaxResult getAPerson(
+    @RequestMapping(value = "/admin/dept/{dept_id}", method = RequestMethod.POST)
+    public @ResponseBody AjaxResult updateDept(
+        @PathVariable("dept_id") String dept_id,
+        @RequestParam("org_id") String org_id,
+        @RequestParam("group_id") String group_id,
+        @RequestParam("dept_name") String dept_name,
+        HttpSession s,
+        Model m) {
+
+        AjaxResult r = new AjaxResult();
+        try{
+            if(s.getAttribute("UA") == null)
+                throw new Exception("You havent login!");
+
+            Object message = s.getAttribute("message");
+            if(message != null){
+                r.setMsg((String)message);
+                s.removeAttribute("message");
+            }
+
+            Dept.update(org_id,group_id,dept_id,dept_name);
+
+            r.success();
+        }catch(HttpStatusBase e){
+            throw e;
+        }catch(Exception e){
+            r.fail();
+            throw new Http500((String)e.getMessage());
+        }
+        return r;
+    }
+
+    @RequestMapping(value = "/admin/dept/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody AjaxResult delDept(
         @PathVariable("id") String id,
         HttpSession s,
         Model m) {
@@ -268,25 +291,24 @@ public class AdminController {
                 s.removeAttribute("message");
             }
 
-            r.setDataFromPerson(new Person(id));
+            Dept.delete(id);
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg(e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
 
-    @RequestMapping(value = "/admin/person/", method = RequestMethod.POST)
-    public @ResponseBody AjaxResult createPerson(
+    // ====================
+
+    @RequestMapping(value = "/admin/group/", method = RequestMethod.POST)
+    public @ResponseBody AjaxResult createGroup(
         @RequestParam("org_id") String org_id,
-        @RequestParam("dept_id") String dept_id,
-        @RequestParam("p_id") String p_id,
-        @RequestParam("p_name") String p_name,
-        @RequestParam("p_phone") String p_phone,
-        @RequestParam("p_mail") String p_mail,
-        @RequestParam("p_title") String p_title,
-        @RequestParam("p_pass") String p_pass,
+        @RequestParam("group_id") String group_id,
+        @RequestParam("group_name") String group_name,
         HttpSession s,
         Model m) {
 
@@ -301,52 +323,23 @@ public class AdminController {
                 s.removeAttribute("message");
             }
 
-            // =========================
-            // pwd hash process...
-            // =========================
-
-            //compare password
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(p_pass.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            p_pass = hexString.toString();
-
-            Person.add(
-                org_id,
-                dept_id,
-                p_id,
-                p_name,
-                p_phone,
-                p_mail,
-                p_title,
-                p_pass
-            );
+            Group.add(org_id,group_id,group_name);
 
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg(e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
 
-    @RequestMapping(value = "/admin/person/{p_id}", method = RequestMethod.POST)
-    public @ResponseBody AjaxResult updatePerson(
-        @PathVariable("p_id") String p_id_ori,
-        @RequestParam("org_id") String org_id,
-        @RequestParam("dept_id") String dept_id,
-        @RequestParam("p_id") String p_id_new,
-        @RequestParam("p_name") String p_name,
-        @RequestParam("p_phone") String p_phone,
-        @RequestParam("p_mail") String p_mail,
-        @RequestParam("p_title") String p_title,
-        @RequestParam("p_pass") String p_pass,
+    @RequestMapping(value = "/admin/group/{org_id}", method = RequestMethod.POST)
+    public @ResponseBody AjaxResult updateGroup(
+        @PathVariable("org_id") String org_id,
+        @RequestParam("group_id") String group_id,
+        @RequestParam("group_name") String group_name,
         HttpSession s,
         Model m) {
 
@@ -361,44 +354,20 @@ public class AdminController {
                 s.removeAttribute("message");
             }
 
-            // =========================
-            // pwd hash process...
-            // =========================
-
-            //compare password
-            // Create MD5 Hash
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(p_pass.getBytes());
-            byte messageDigest[] = digest.digest();
-
-            // Create Hex String
-            StringBuffer hexString = new StringBuffer();
-            for (int i=0; i<messageDigest.length; i++)
-                hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
-            p_pass = hexString.toString();
-
-            Person p = new Person(p_id_ori);
-            p.org_id = org_id;
-            p.dept_id = dept_id;
-            p.p_id = p_id_new;
-            p.p_name = p_name;
-            p.p_phone = p_phone;
-            p.p_mail = p_mail;
-            p.p_title = p_title;
-            p.p_pass = p_pass;
-
-            p.save();
+            Group.update(org_id,group_id,group_name);
 
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg(e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
 
-    @RequestMapping(value = "/admin/person/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody AjaxResult delPerson(
+    @RequestMapping(value = "/admin/group/{id}", method = RequestMethod.DELETE)
+    public @ResponseBody AjaxResult delGroup(
         @PathVariable("id") String id,
         HttpSession s,
         Model m) {
@@ -413,16 +382,18 @@ public class AdminController {
                 s.removeAttribute("message");
             }
 
-            Person.delete(id);
+            Group.delete(id);
             r.success();
+        }catch(HttpStatusBase e){
+            throw e;
         }catch(Exception e){
             r.fail();
-            r.setMsg(e.getMessage());
+            throw new Http500((String)e.getMessage());
         }
         return r;
     }
 
-    // Dept Resources end ================
+    // ====================
 
     @RequestMapping(value = "/welcome/{userId}/{userName}", method = RequestMethod.GET)
     public @ResponseBody JsonTest test(

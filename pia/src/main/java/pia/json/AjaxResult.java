@@ -12,6 +12,7 @@ public class AjaxResult {
     public String message;
     public Vector< Map<String,String> > data;
     public Vector< Map<String,String> > error;
+    public BaseModel model;
 
     public void success(){
         this.success = true;
@@ -31,21 +32,6 @@ public class AjaxResult {
 
     public void setErr(Vector< Map<String,String> > data){
         this.data = data;
-    }
-
-    public void setDataFromPerson(Person p){
-        Vector< Map<String,String> > v = new Vector< Map<String,String> >();
-        Map m = new TreeMap<String,String>();
-        m.put("org_id", p.org_id);
-        m.put("dept_id", p.dept_id);
-        m.put("p_id", p.p_id);
-        m.put("p_name", p.p_name);
-        m.put("p_phone", p.p_phone);
-        m.put("p_mail", p.p_mail);
-        m.put("p_title", p.p_title);
-        m.put("p_pass", p.p_pass);
-        v.add(m);
-        this.data = v;
     }
  
     //getter and setter methods
