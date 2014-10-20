@@ -28,65 +28,89 @@
 
 
     <script>
-      var dep_data = [
-        {
-          id:1,
-          school:"中興大學",
-          group:"理學院",
-          dept:"資工系"
-        },
-        {
-          id:2,
-          school:"中興大學",
-          group:"理學院",
-          dept:"物理系"
-        }
-      ];
+      var person,group,dept;
+      var isFail = false;
 
-      function init_person(){
-        var panel = $("#person div.panel");
-        var table = $("#person table");
+      function init_table(type,data){
+        var panel = $("#"+type+" div.panel");
+        var table = $("#"+type+" table");
         var sample = table.find("tr.sample.data");
         var form_sample = table.find("tr.sample.form");
         var tbody = table.find("tbody");
         var tmp,e;
 
-        function edit_action(){
-          var par=$(this).parents('tr');
-          console.log(par);
-          if (par.next().hasClass( "form" )) {
-              console.log("123");
-              par.next().remove()
-          } else {
-              var form = form_sample.clone();
-              form.removeClass("sample");
+        for(k in data){
+          tmp = sample.clone();
+          e = data[k];
+          tmp.find("td.cell").each(function(){
+            $(this).text(e[$(this).attr("field")]);
+          });
+          tmp.data(e);
+          tmp.find("td.action a").attr("id","edit" + e.p_id).click(function(){
+            var par=$(this).parents('tr');
+            console.log(par);
+            if (par.next().hasClass( "form" )) {
+                par.next().remove()
+            } else {
+                var form = form_sample.clone();
+                form.removeClass("sample");
+                par.after(form);
+            };
+          });
 
-              par.after(form);
-          };
+          tmp.removeClass("sample");
+          tbody.append(tmp);
         }
+      }
 
+      function render(){
+        init_table("dept",dept);
+        init_table("person",person);
+      }
+
+      function getAllData(allCompleted){
+        var complete_cnt = 0;
+        var complete_cnt_total = 3;
         $.ajax({
           url: "/pia/admin/person",
           success: function(data){
-            var person_data = data.data;
-            for(k in person_data){
-              tmp = sample.clone();
-              e = person_data[k];
-              tmp.find("td.cell").each(function(){
-                $(this).text(e[$(this).attr("field")]);
-              });
-              tmp.data(e);
-              tmp.find("td.action a").attr("id","edit" + e.p_id).click(edit_action);
-
-              tmp.removeClass("sample");
-              tbody.append(tmp);
-            }
-            var tr_height = table.find("tr").eq(0).height();
-
-            //$("a[id^=edit]").click(edit_action);
+            person = data.data;
+            complete_cnt ++;
+            if(complete_cnt == complete_cnt_total)
+              allCompleted();
           },
+          error: function(){
+            isFail = true;
+          }
+        });
+
+        $.ajax({
+          url: "/pia/admin/group",
+          success: function(data){
+            group = data.data;
+            complete_cnt ++;
+            if(complete_cnt == complete_cnt_total)
+              allCompleted();
+          },
+          error: function(){
+            isFail = true;
+          }
+        });
+
+        $.ajax({
+          url: "/pia/admin/dept",
+          success: function(data){
+            dept = data.data;
+            complete_cnt ++;
+            if(complete_cnt == complete_cnt_total)
+              allCompleted();
+          },
+          error: function(){
+            isFail = true;
+          }
         });
       }
+
 
 
       $(document).ready(function() {
@@ -97,49 +121,7 @@
           });
         });
 
-        function init_dep(){
-          var panel = $("#dep div.panel");
-          var table = $("#dep table");
-          var sample = table.find("tr.sample");
-          var tbody = table.find("tbody");
-          var tmp,e;
-          console.log(table);
-          for(k in dep_data){
-            tmp = sample.clone();
-            e = dep_data[k];
-            for(j in e){
-              tmp.find(".cell-" + j).text(e[j]);
-            }
-
-            tmp.find("td.action a").attr("id","edit" + e.id)
-
-            tmp.removeClass("sample");
-            tbody.append(tmp);
-          }
-          var tr_height = table.find("tr").eq(0).height();
-
-          $("a[id^=edit]").click(function () {
-              var par=$(this).parents('tr')
-              if ($(this).parents('tr').next().hasClass( "form" )) {
-                  $(this).parents('tr').next().remove()
-              } else {
-                  //$(this).parents('tr').after("<tr class='form'><td colspan='5'>THIS IS YOUR FORM</td></tr>")
-                  //panel.find("div.editing").slideToggle();
-                  $(this).parents('tr').after("<tr class='form'><td colspan='5'></td></tr>");
-                  //var type = "admin/" + ($(this).parents(".tab-pane").attr("id")) + "/" +  ;
-
-                  //console.log(type);
-                  $(this).parents('tr').next().load("test/form.jsp #form_dep");
-
-              };
-          });
-
-
-        }
-        init_dep();
-        init_person();
-
-        //$("a[href=#dep]").on('shown.bs.tab',);
+        getAllData(render);
       });
     </script>
   </jsp:attribute>
@@ -151,7 +133,7 @@
         xxx您好
       </div>
       <div class="list-group">
-        <a class="list-group-item" href="#dep" role="tab" data-toggle="tab">單位資料表</a>
+        <a class="list-group-item" href="#dept" role="tab" data-toggle="tab">單位資料表</a>
         <a class="list-group-item" href="#person" role="tab" data-toggle="tab">人員資料表</a>
         <a class="list-group-item" href="#audit" role="tab" data-toggle="tab">稽核設定</a>
         <a class="list-group-item" href="#cal" role="tab" data-toggle="tab">行事曆</a>
@@ -162,8 +144,8 @@
 
       <!-- Tab panes -->
       <div class="tab-content">
-        <div class="tab-pane active" id="dep">
-          <%@ include file="/WEB-INF/view/admin/pane_dep.jsp"%>
+        <div class="tab-pane active" id="dept">
+          <%@ include file="/WEB-INF/view/admin/pane_dept.jsp"%>
         </div>
         <div class="tab-pane" id="person">
           <%@ include file="/WEB-INF/view/admin/pane_person.jsp"%>

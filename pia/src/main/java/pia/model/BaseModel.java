@@ -21,7 +21,7 @@ public abstract class BaseModel{
 	protected static Vector< Map<String,String> > getAll(String tableName,String fields[]) throws Exception{
 		
 		PreparedStatement all =
-			DbInit.getStatement("SELECT * from " + tableName);
+			DbInit.getStatement("SELECT * from `" + tableName + "`");
 		ResultSet rs;
 		try{
 			rs = all.executeQuery();
@@ -41,7 +41,7 @@ public abstract class BaseModel{
 	protected static ResultSet find(String tableName,String pk,String pkv) throws Exception{
 		PreparedStatement sel =
 			DbInit.getStatement(
-				String.format("SELECT * from %s where `%s` = ?",tableName,pk));
+				String.format("SELECT * from `%s` where `%s` = ?",tableName,pk));
 		sel.setString(1,pkv);
 		return sel.executeQuery();
 	}

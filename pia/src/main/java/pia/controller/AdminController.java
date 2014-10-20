@@ -36,7 +36,7 @@ public class AdminController {
         Model m) {
         AjaxResult r = new AjaxResult();
         if(s.getAttribute("UA") == null)
-            throw new Http403("You havent login!");
+            throw new Http403();
 
         Object message = s.getAttribute("message");
         if(message != null){
@@ -51,10 +51,12 @@ public class AdminController {
                     break;
                 case "dept":
                     r.setData(Dept.getAll());
+                    break;
                 case "group":
                     r.setData(Group.getAll());
+                    break;
                 default:
-                    throw new Http404("unknown type!");
+                    throw new Http404();
             }
 
             r.success();
@@ -62,7 +64,8 @@ public class AdminController {
             throw e;
         }catch(Exception e){
             r.fail();
-            throw new Http500();
+            r.setMsg((String)e.getMessage());
+            //throw new Http500();
         }
         return r;
     }
@@ -95,7 +98,7 @@ public class AdminController {
                     r.setData((new Group(id)).get());
                     break;
                 default:
-                    throw new Http404("unknown type!");
+                    throw new Http404();
             }
 
             r.success();

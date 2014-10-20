@@ -110,7 +110,7 @@ public class Person extends BaseModel {
 		return v;
 	}
 
-	private static String md5(String src){
+	private static String md5(String src) throws Exception{
 		MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
 		digest.update(src.getBytes());
 		byte messageDigest[] = digest.digest();
