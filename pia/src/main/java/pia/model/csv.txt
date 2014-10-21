@@ -1,11 +1,11 @@
 auditor:
-event_id,org_id,p_id,ad_org_id,ad_dept_id,ad_time_beg,ad_time_end
+event_id,org_id,p_id,ad_org_id,ad_dept_id,ad_time_from,ad_time_end
 
 group:
 org_id,group_id,group_name
 
 event:
-event_id,event_name,event_beg,event_end
+event_id,event_name,event_from,event_end
 
 dept:
 org_id,group_id,dept_id,dept_name

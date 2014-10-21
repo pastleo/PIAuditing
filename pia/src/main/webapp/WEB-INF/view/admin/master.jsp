@@ -12,8 +12,6 @@
       text-align: center;
     }
 
-
-
     table.table tr.sample{
       display: none;
     }
@@ -25,10 +23,8 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment-with-locales.min.js"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/fullcalendar/2.1.1/fullcalendar.min.js"></script>
 
-
-
     <script>
-      var person,group,dept;
+      var person,group,dept,audit;
       var isFail = false;
 
       function init_table(type,data){
@@ -66,11 +62,12 @@
       function render(){
         init_table("dept",dept);
         init_table("person",person);
+        init_table("audit",audit);
       }
 
       function getAllData(allCompleted){
         var complete_cnt = 0;
-        var complete_cnt_total = 3;
+        var complete_cnt_total = 4;
         $.ajax({
           url: "/pia/admin/person",
           success: function(data){
@@ -101,6 +98,19 @@
           url: "/pia/admin/dept",
           success: function(data){
             dept = data.data;
+            complete_cnt ++;
+            if(complete_cnt == complete_cnt_total)
+              allCompleted();
+          },
+          error: function(){
+            isFail = true;
+          }
+        });
+
+        $.ajax({
+          url: "/pia/admin/auditor",
+          success: function(data){
+            audit = data.data;
             complete_cnt ++;
             if(complete_cnt == complete_cnt_total)
               allCompleted();

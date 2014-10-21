@@ -55,6 +55,12 @@ public class AdminController {
                 case "group":
                     r.setData(Group.getAll());
                     break;
+                case "auditor":
+                    r.setData(Auditor.getAll());
+                    break;
+                case "event":
+                    r.setData(Event.getAll());
+                    break;
                 default:
                     throw new Http404();
             }
