@@ -5,11 +5,49 @@
   <div class="panel-heading" style="height: 55px; line-height: 34px;">
     單位資料表
 
-      <button type="button" class="btn btn-primary pull-right">
-        ＋ 新增
-      </button>
-
+    <!-- Button trigger modal -->
+    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#dept_Modal">
+      ＋ 新增
+    </button>
+    <!-- Modal -->
+    <div class="modal fade bs-example-modal-lg" id="dept_Modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">新增單位</h4>
+          </div>
+          <div class="modal-body">
+            <form class="form-horizontal" role="form">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">學校</label>
+                <div class="col-sm-10">
+                  <input class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">學院</label>
+                <div class="col-sm-10">
+                  <input class="form-control">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">學系</label>
+                <div class="col-sm-10">
+                  <input class="form-control">
+                </div>
+              </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+            <button type="button" class="btn btn-primary">新增</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
   <div class="panel-body">
     <div class="col-lg-12">
       <div class="input-group">
@@ -50,37 +88,13 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">系所、組織</label>
+                <label class="col-sm-2 control-label">學院</label>
                 <div class="col-sm-10">
                   <input class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label">名稱</label>
-                <div class="col-sm-10">
-                  <input class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">電話</label>
-                <div class="col-sm-10">
-                  <input class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">Email</label>
-                <div class="col-sm-10">
-                  <input class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">職稱</label>
-                <div class="col-sm-10">
-                  <input class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">重設密碼</label>
+                <label class="col-sm-2 control-label">學系</label>
                 <div class="col-sm-10">
                   <input class="form-control">
                 </div>
