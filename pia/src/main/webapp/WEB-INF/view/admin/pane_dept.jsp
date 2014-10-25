@@ -6,11 +6,11 @@
     單位資料表
 
     <!-- Button trigger modal -->
-    <button class="btn btn-primary pull-right" data-toggle="modal" data-target="#dept_Modal">
+    <button class="btn btn-primary pull-right create" data-toggle="modal" data-target="#dept_Modal">
       ＋ 新增
     </button>
     <!-- Modal -->
-    <div class="modal fade bs-example-modal-lg" id="dept_Modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal fade bs-example-modal-lg create_form" id="dept_Modal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -20,21 +20,20 @@
           <div class="modal-body">
             <form class="form-horizontal" role="form">
               <div class="form-group">
-                <label class="col-sm-2 control-label">學校</label>
+                <label class="col-sm-2 control-label">學校、學院</label>
                 <div class="col-sm-10">
-                  <input class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">學院</label>
-                <div class="col-sm-10">
-                  <input class="form-control">
+                  <input class="form-control" name="group_id" type="token" data-limit="1" tokens-space="group">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">學系</label>
                 <div class="col-sm-10">
-                  <input class="form-control">
+                  <input class="form-control" name="dept_id">
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button type="submit" class="btn btn-default">Submit</button>
                 </div>
               </div>
             </form>
@@ -71,10 +70,10 @@
     </thead>
     <tbody>
       <tr class="sample data">
-        <td class="cell" field="dept_id">1</td>
-        <td class="cell" field="dept_name">中興大學 理學院 資工系</td>
-        <td class="cell" field="group_id">某教授</td>
-        <td class="cell" field="org_id">0987654321</td>
+        <td class="cell pk" field="dept_id"></td>
+        <td class="cell" field="org_name"></td>
+        <td class="cell" field="group_name"></td>
+        <td class="cell" field="dept_name"></td>
         <td class="action"><a href="#edit">修改、刪除</a></td>
       </tr>
       <tr class="sample form">
@@ -82,21 +81,15 @@
           <div class="col-xs-12" style="padding-top: 15px;">
             <form class="form-horizontal" role="form">
               <div class="form-group">
-                <label class="col-sm-2 control-label">學校</label>
+                <label class="col-sm-2 control-label">學校、學院</label>
                 <div class="col-sm-10">
-                  <input class="form-control">
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label">學院</label>
-                <div class="col-sm-10">
-                  <input class="form-control">
+                  <input class="form-control" name="group_id" type="token" data-limit="1" tokens-space="group">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label">學系</label>
                 <div class="col-sm-10">
-                  <input class="form-control">
+                  <input class="form-control" name="dept_id">
                 </div>
               </div>
               <div class="form-group">

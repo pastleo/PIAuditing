@@ -96,7 +96,7 @@
     <tbody>
       <tr class="sample data">
         <td class="cell" field="p_id">1</td>
-        <td class="cell" field="dept_id">中興大學 理學院 資工系</td>
+        <td class="cell" field="dept_name">中興大學 理學院 資工系</td>
         <td class="cell" field="p_name">某教授</td>
         <td class="cell" field="p_phone">0987654321</td>
         <td class="action"><a href="#edit">修改、刪除</a></td>
