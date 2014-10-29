@@ -107,4 +107,39 @@ public class MainController {
         }
         return "hello";
     }
+
+    //all
+    @RequestMapping(value = "/models", method = RequestMethod.GET)
+    public String models() {
+        return "/WEB-INF/model/models";
+    }
+    //show
+    @RequestMapping(value = "/models/{id}", method = RequestMethod.GET)
+    public String model_show(Model m,@PathVariable("id") String id) {
+        m.addAttribute("ctrl","/models/{id}#GET-show");
+        m.addAttribute("id",id);
+        return "/WEB-INF/model/model";
+    }
+    //create
+    @RequestMapping(value = "/models/new", method = RequestMethod.POST)
+    public String model_new(Model m) {
+        m.addAttribute("ctrl","/models/new#POST-create");
+        m.addAttribute("id","new");
+        return "/WEB-INF/model/_update";
+    }
+    //update
+    @RequestMapping(value = "/models/{id}", method = RequestMethod.POST)
+    public String model_update(Model m,@PathVariable("id") String id) {
+        m.addAttribute("ctrl","/models/{id}#POST-update");
+        m.addAttribute("id",id);
+        return "/WEB-INF/model/_update";
+    }
+    //delete
+    @RequestMapping(value = "/models/delete/{id}", method = RequestMethod.GET)
+    public String model_delete(Model m,@PathVariable("id") String id) {
+        m.addAttribute("ctrl","/models/delete/{id}#GET-delete");
+        //m.addAttribute("id",id);
+        try{new TestModel().delete(id);}catch(Exception e){}
+        return "/WEB-INF/model/models";
+    }
 }

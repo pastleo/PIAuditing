@@ -1,8 +1,7 @@
-package pia.model;
+package pia.model2;
 
 import java.sql.*;
 import java.util.*;
-import pia.model.*;
 
 // $C,$TN,$PK
 // $CSV = id,author,todo,detail
@@ -18,12 +17,27 @@ public class TestModel extends BaseModel {
 	private static String m_tn = "test";	//~TN
 	private static String m_pk = "id";	//~PK
 	private static String m_fn[] = {"id","author","todo","detail"};	//~CSV @(\w*) | "\1"
-	
-	public static Vector< Map<String,String> > getAll() throws Exception{
-		return BaseModel.getAll(m_tn,m_fn);
-	}
-	public static String[] getFieldNames(){return m_fn;}
+		
+	public String[] getFieldNames(){return m_fn;}
+	public String getTableName(){return m_tn;}
+	public String getPk(){return m_pk;}
+	public String getId(){return id;}
 
+	public String get(String key){	//redo
+		switch(key){
+			case "id":
+				return id;
+			case "author":
+				return author;
+			case "todo":
+				return todo;
+			case "detail":
+				return detail;
+			default:
+				return "Oops property not found";
+		}
+	}
+	public void set(String key,String value){}
 	public TestModel(){
 		//#assign
 		id = author = todo = detail =
@@ -31,7 +45,7 @@ public class TestModel extends BaseModel {
 	}
 
 	public TestModel(String _id) throws Exception{
-		ResultSet rs = find(m_tn,m_pk,_id);
+		ResultSet rs = find(_id);
 		if(rs.next()){	//~CSV @(\w*),? |\1 = rs.getString("\1");\n
 			id = rs.getString("id");
 			author = rs.getString("author");
@@ -44,7 +58,7 @@ public class TestModel extends BaseModel {
 
 	//tested
 	public void save() throws Exception{
-			ResultSet rs = find(m_tn,m_pk,id);	//$id
+			ResultSet rs = find(id);	//$id
 			if(rs.next())	//update
 				//update(#CSV);
 				update(id,author,todo,detail);
@@ -95,13 +109,7 @@ public class TestModel extends BaseModel {
 		if(_id == null) return false;	//$id
 		return true;
 	}
-	//tested
-	public static void delete(String _id) throws Exception{
-		String sql = String.format("DELETE FROM %s Where %s=?",m_tn,m_pk);
-		PreparedStatement del = DbInit.getStatement(sql);
-		del.setString(1,_id);
-		del.executeUpdate();
-	}
+	
 	//~CSV @(\w*),? |public String \1;\n
 	public String id;
 	public String author;
