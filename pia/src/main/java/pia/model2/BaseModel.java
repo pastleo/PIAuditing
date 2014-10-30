@@ -47,6 +47,6 @@ public abstract class BaseModel{
 	public abstract String getPk();
 	public abstract String[] getFieldNames();
 	public abstract String getId();
-	public abstract String get(String key);		//key is property name
-	public abstract void set(String key,String value);
+	// public abstract String get(String key);
+	// public abstract void set(String key,String value);
 }

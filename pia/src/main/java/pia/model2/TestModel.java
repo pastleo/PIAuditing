@@ -23,21 +23,6 @@ public class TestModel extends BaseModel {
 	public String getPk(){return m_pk;}
 	public String getId(){return id;}
 
-	public String get(String key){	//redo
-		switch(key){
-			case "id":
-				return id;
-			case "author":
-				return author;
-			case "todo":
-				return todo;
-			case "detail":
-				return detail;
-			default:
-				return "Oops property not found";
-		}
-	}
-	public void set(String key,String value){}
 	public TestModel(){
 		//#assign
 		id = author = todo = detail =

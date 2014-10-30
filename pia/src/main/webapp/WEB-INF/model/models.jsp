@@ -12,7 +12,7 @@
 </head>
 <body>
 	<%
-		String name = "pia.model2.TestModel";
+		String name = "pia.model2.Group";
 		BaseModel i = (BaseModel)Class.forName(name).newInstance();
 		pageContext.setAttribute("obj",i,PageContext.PAGE_SCOPE);
 	%>
