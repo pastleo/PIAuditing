@@ -11,7 +11,7 @@
 	String id = String.valueOf(request.getAttribute("id"));
 	m = (id.equals("new")) ? new TestModel() : new TestModel(id);
 	//what happens if new TestModel(id) is executed but not found?
-	// pageContext.setAttribute("mod",m,PageContext.PAGE_SCOPE);
+	 pageContext.setAttribute("obj",m,PageContext.PAGE_SCOPE);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,15 +22,20 @@
 <body>
 	<p>from:<%=request.getAttribute("ctrl")%></p>
 	<p>id:<%=request.getAttribute("id")%></p>
-    <!-- <jsp:include page="pageContext.jsp"/> -->
+    
 	<form action="/pia/models/<%=m.id%>" method="post">
+		<c:forTokens delims=" " var="attr" items="idAttr author todo detail">
+			<br>
+				<c:out value="${obj[attr]}"/>
+			
+		</c:forTokens>
 		<%
-			for(String field:m.getFieldNames())
-				out.print(
-					String.format("<p>%s:"
-						+"<input name=\"%s\"type=\"text\" value=\"%s\"/>"
-						+"</p>",field,field,m.get(field))
-					);
+			// for(String field:m.getFieldNames())
+			// 	out.print(
+			// 		String.format("<p>%s:"
+			// 			+"<input name=\"%s\"type=\"text\" value=\"%s\"/>"
+			// 			+"</p>",field,field,m.get(field))
+			// 		);
 		%>
 		<button type="submit">send</button>
 		<p><a href="/pia/models">Back</a></p>
