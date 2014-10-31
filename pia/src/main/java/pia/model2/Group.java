@@ -10,6 +10,7 @@ public class Group extends BaseModel {
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return group_id;}
+	public String getTokens(){return "orgId,groupId,groupName";}
 	public Group(){
 		org_id = group_id = group_name =
 		null;
@@ -58,4 +59,8 @@ public class Group extends BaseModel {
 	public String org_id;
 	public String group_id;
 	public String group_name;
+	public String getOrgId(){return org_id;}
+	public String getGroupId(){return group_id;}
+	public String getGroupName(){return group_name;}
+
 }

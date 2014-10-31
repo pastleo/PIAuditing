@@ -15,14 +15,19 @@ import java.util.*;
 public class TestModel extends BaseModel {
 	
 	private static String m_tn = "test";	//~TN
-	private static String m_pk = "id";	//~PK
+	//private static String m_pk = "id";	//~PK
 	private static String m_fn[] = {"id","author","todo","detail"};	//~CSV @(\w*) | "\1"
 		
 	public String[] getFieldNames(){return m_fn;}
 	public String getTableName(){return m_tn;}
-	public String getPk(){return m_pk;}
+	public String getPk(){return "id";}
 	public String getId(){return id;}
+	public String getTokens(){return "id,author,todo,detail";}
 
+	public String getIdAttr(){return id;}	//oops naming conflict
+	public String getAuthor(){return author;}
+	public String getTodo(){return todo;}
+	public String getDetail(){return detail;}
 	public TestModel(){
 		//#assign
 		id = author = todo = detail =

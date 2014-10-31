@@ -46,6 +46,9 @@ public abstract class BaseModel{
 	public abstract String getTableName();
 	public abstract String getPk();
 	public abstract String[] getFieldNames();
+	public abstract String getTokens();
+	//It's not abstract so that models implement it on demand
+	public String getFieldNamesRaw(){return getTokens();}
 	public abstract String getId();
 	// public abstract String get(String key);
 	// public abstract void set(String key,String value);

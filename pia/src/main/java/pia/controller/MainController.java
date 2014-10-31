@@ -109,37 +109,46 @@ public class MainController {
     }
 
     //all
-    @RequestMapping(value = "/models", method = RequestMethod.GET)
-    public String models() {
-        return "/WEB-INF/model/models";
+    @RequestMapping(value = "/{className}", method = RequestMethod.GET)
+    public String models(
+        Model m,
+        @PathVariable("className") String className) {
+        m.addAttribute("cname",className);
+        return "/WEB-INF/general/all";
     }
     //show
-    @RequestMapping(value = "/models/{id}", method = RequestMethod.GET)
-    public String model_show(Model m,@PathVariable("id") String id) {
-        m.addAttribute("ctrl","/models/{id}#GET-show");
+    @RequestMapping(value = "/{className}/{id}", method = RequestMethod.GET)
+    public String model_show(
+        Model m,
+        @PathVariable("className") String className,
+        @PathVariable("id") String id) {
+        m.addAttribute("ctrl","/{className}/{id}#GET-show");
         m.addAttribute("id",id);
-        return "/WEB-INF/model/model";
+        m.addAttribute("cname",className);
+        return "/WEB-INF/general/edit";
     }
     //create
-    @RequestMapping(value = "/models/new", method = RequestMethod.POST)
+    @RequestMapping(value = "/TestModel/new", method = RequestMethod.POST)
     public String model_new(Model m) {
-        m.addAttribute("ctrl","/models/new#POST-create");
+        m.addAttribute("ctrl","/TestModel/new#POST-create");
         m.addAttribute("id","new");
-        return "/WEB-INF/model/_update";
+        return "/WEB-INF/testModel/_update";
     }
     //update
-    @RequestMapping(value = "/models/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/TestModel/{id}", method = RequestMethod.POST)
     public String model_update(Model m,@PathVariable("id") String id) {
-        m.addAttribute("ctrl","/models/{id}#POST-update");
+        m.addAttribute("ctrl","/TestModel/{id}#POST-update");
         m.addAttribute("id",id);
-        return "/WEB-INF/model/_update";
+        return "/WEB-INF/testModel/_update";
     }
     //delete
+    //to be generalize
     @RequestMapping(value = "/models/delete/{id}", method = RequestMethod.GET)
     public String model_delete(Model m,@PathVariable("id") String id) {
         m.addAttribute("ctrl","/models/delete/{id}#GET-delete");
         //m.addAttribute("id",id);
         try{new TestModel().delete(id);}catch(Exception e){}
-        return "/WEB-INF/model/models";
+        m.addAttribute("cname","TestModel");
+        return "/WEB-INF/general/all";
     }
 }

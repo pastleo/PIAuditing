@@ -5,13 +5,16 @@
 <%@ page import="pia.model2.*" %>
 
 <%!
-	TestModel m;
+	static TestModel m;
 %>
 <%
 	String id = String.valueOf(request.getAttribute("id"));
+	String cn = String.valueOf(request.getAttribute("cname"));
+	Class c = Class.forName("pia.model2." + cn);
 	m = (id.equals("new")) ? new TestModel() : new TestModel(id);
 	//what happens if new TestModel(id) is executed but not found?
-	 pageContext.setAttribute("obj",m,PageContext.PAGE_SCOPE);
+	pageContext.setAttribute("obj",m,PageContext.PAGE_SCOPE);
+	pageContext.setAttribute("cname",cn,PageContext.PAGE_SCOPE);
 %>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,22 +26,14 @@
 	<p>from:<%=request.getAttribute("ctrl")%></p>
 	<p>id:<%=request.getAttribute("id")%></p>
     
-	<form action="/pia/models/<%=m.id%>" method="post">
-		<c:forTokens delims=" " var="attr" items="idAttr author todo detail">
+	<form action="/pia/${cname}/<%=m.id%>" method="post">
+		<c:forTokens delims="," var="attr" items="${obj.tokens}">
+			<c:set var="v" value="${obj[attr]}"/>
+			${attr}: <input type="text" name="${attr}" value="${v}">
 			<br>
-				<c:out value="${obj[attr]}"/>
-			
 		</c:forTokens>
-		<%
-			// for(String field:m.getFieldNames())
-			// 	out.print(
-			// 		String.format("<p>%s:"
-			// 			+"<input name=\"%s\"type=\"text\" value=\"%s\"/>"
-			// 			+"</p>",field,field,m.get(field))
-			// 		);
-		%>
 		<button type="submit">send</button>
-		<p><a href="/pia/models">Back</a></p>
+		<p><a href="/pia/${cname}">Back</a></p>
 	</form>
 </body>
 </html>

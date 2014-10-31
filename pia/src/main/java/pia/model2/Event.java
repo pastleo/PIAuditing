@@ -11,6 +11,7 @@ public class Event extends BaseModel {
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return event_id;}
+	public String getTokens(){return "eventId,eventName,eventFrom,eventEnd";}
 	public Event(){
 		event_id = event_name = event_from = event_end =
 		null;
@@ -64,4 +65,9 @@ public class Event extends BaseModel {
 	public String event_name;
 	public String event_from;
 	public String event_end;
+	public String getEventId(){return event_id;}
+	public String getEventName(){return event_name;}
+	public String getEventFrom(){return event_from;}
+	public String getEventEnd(){return event_end;}
+
 }

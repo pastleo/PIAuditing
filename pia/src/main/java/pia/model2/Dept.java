@@ -10,6 +10,7 @@ public class Dept extends BaseModel {
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return dept_id;}
+	public String getTokens(){return "orgId,groupId,deptId,deptName";}
 	public Dept(){
 		org_id = group_id = dept_id = dept_name =
 		null;
@@ -61,4 +62,9 @@ public class Dept extends BaseModel {
 	public String group_id;
 	public String dept_id;
 	public String dept_name;
+	public String getOrgId(){return org_id;}
+	public String getGroupId(){return group_id;}
+	public String getDeptId(){return dept_id;}
+	public String getDeptName(){return dept_name;}
+
 }

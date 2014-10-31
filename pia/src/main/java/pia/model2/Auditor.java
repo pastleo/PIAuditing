@@ -10,6 +10,7 @@ public class Auditor extends BaseModel {
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return p_id;}
+	public String getTokens(){return "eventId,orgId,pId,adOrgId,adDeptId,adTimeFrom,adTimeEnd";}
 	public Auditor(){
 		event_id = org_id = p_id = ad_org_id = ad_dept_id = ad_time_from = ad_time_end =
 		null;
@@ -75,4 +76,12 @@ public class Auditor extends BaseModel {
 	public String ad_dept_id;
 	public String ad_time_from;
 	public String ad_time_end;
+	public String getEventId(){return event_id;}
+	public String getOrgId(){return org_id;}
+	public String getPId(){return p_id;}
+	public String getAdOrgId(){return ad_org_id;}
+	public String getAdDeptId(){return ad_dept_id;}
+	public String getAdTimeFrom(){return ad_time_from;}
+	public String getAdTimeEnd(){return ad_time_end;}
+
 }

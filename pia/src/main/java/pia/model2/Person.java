@@ -15,6 +15,7 @@ public class Person extends BaseModel {
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return p_id;}
+	public String getTokens(){return "orgId,deptId,pId,pName,pPhone,pMail,pTitle,pPass";}
 	public Person(){
 		org_id = dept_id = p_id = p_name = p_phone = p_mail = p_title = p_pass =
 		null;
@@ -106,5 +107,13 @@ public class Person extends BaseModel {
 	public String p_mail;
 	public String p_title;
 	public String p_pass;
+	public String getOrg_id(){return org_id;}
+	public String getDept_id(){return dept_id;}
+	public String getPId(){return p_id;}
+	public String getPName(){return p_name;}
+	public String getPPhone(){return p_phone;}
+	public String getPMail(){return p_mail;}
+	public String getPTitle(){return p_title;}
+	public String getPPass(){return p_pass;}
 
 }

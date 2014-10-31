@@ -8,9 +8,10 @@
 	TestModel m = id=="new" ? new TestModel() : new TestModel(id);
 	if (m==null) response.sendRedirect("/404");
 	m.id = request.getParameter("id");
+	
 	m.author = request.getParameter("author");
 	m.todo = request.getParameter("todo");
 	m.detail = request.getParameter("detail");
 	m.save();
-	response.sendRedirect("/pia/models");
+	response.sendRedirect("/pia/TestModel");
 %>
