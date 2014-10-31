@@ -69,5 +69,26 @@ public class Event extends BaseModel {
 	public String getEventName(){return event_name;}
 	public String getEventFrom(){return event_from;}
 	public String getEventEnd(){return event_end;}
+	public Vector< Event > getAllObj() throws Exception{
+		String tableName = getTableName();
+		String fields[] = getFieldNames();
+		PreparedStatement all =
+			DbInit.getStatement("SELECT * from `" + tableName + "`");
+		ResultSet rs;
+		try{
+			rs = all.executeQuery();
 
+			Vector< Event > v = new Vector< Event >();
+			while(rs.next()){
+				if(this instanceof Event) ;
+				Event m = new Event();
+				m.event_id = rs.getString("event_id");
+				m.event_name = rs.getString("event_name");
+				m.event_from = rs.getString("event_from");
+				m.event_end = rs.getString("event_end");
+				v.add(m);
+			}
+			return v;
+		}catch(Exception e){throw e;}
+	}
 }

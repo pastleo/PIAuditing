@@ -3,13 +3,7 @@
 <%@ page import="java.util.*" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="pia.model2.*" %>
-<%
-	String cn = String.valueOf(request.getAttribute("cname"));
-	String name = "pia.model2." + cn;
-	
-	pageContext.setAttribute("obj",Class.forName(name).newInstance(),PageContext.PAGE_SCOPE);
-	pageContext.setAttribute("cname",cn,PageContext.PAGE_SCOPE);
-%>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,16 +11,11 @@
 	<title>Models</title>
 </head>
 <body>
-
-	<div>
-		<h3>將就一下的link</h3>
-		<a href="/pia/Event">Event</a>
-		<a href="/pia/Auditor">Auditor</a>
-		<a href="/pia/Group">Group</a>
-		<a href="/pia/Person">Person</a>
-		<a href="/pia/Dept">Dept</a>
-	</div>
-	<hr>
+	<%
+		pageContext.setAttribute("obj",new Person(),PageContext.PAGE_SCOPE);
+		pageContext.setAttribute("cname","Person",PageContext.PAGE_SCOPE);
+	%>
+	
 	<table>
 		<thead>
 			<tr>

@@ -66,5 +66,25 @@ public class Dept extends BaseModel {
 	public String getGroupId(){return group_id;}
 	public String getDeptId(){return dept_id;}
 	public String getDeptName(){return dept_name;}
+	public Vector< Dept > getAllObj() throws Exception{
+		String tableName = getTableName();
+		String fields[] = getFieldNames();
+		PreparedStatement all =
+			DbInit.getStatement("SELECT * from `" + tableName + "`");
+		ResultSet rs;
+		try{
+			rs = all.executeQuery();
 
+			Vector< Dept > v = new Vector< Dept >();
+			while(rs.next()){
+				Dept m = new Dept();
+				m.org_id = rs.getString("org_id");
+				m.group_id = rs.getString("group_id");
+				m.dept_id = rs.getString("dept_id");
+				m.dept_name = rs.getString("dept_name");
+				v.add(m);
+			}
+			return v;
+		}catch(Exception e){throw e;}
+	}
 }

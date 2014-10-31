@@ -62,5 +62,24 @@ public class Group extends BaseModel {
 	public String getOrgId(){return org_id;}
 	public String getGroupId(){return group_id;}
 	public String getGroupName(){return group_name;}
+	public Vector< Group > getAllObj() throws Exception{
+		String tableName = getTableName();
+		String fields[] = getFieldNames();
+		PreparedStatement all =
+			DbInit.getStatement("SELECT * from `" + tableName + "`");
+		ResultSet rs;
+		try{
+			rs = all.executeQuery();
 
+			Vector< Group > v = new Vector< Group >();
+			while(rs.next()){
+				Group m = new Group();
+				m.org_id = rs.getString("org_id");
+				m.group_id = rs.getString("group_id");
+				m.group_name = rs.getString("group_name");
+				v.add(m);
+			}
+			return v;
+		}catch(Exception e){throw e;}
+	}
 }

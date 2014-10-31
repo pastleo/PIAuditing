@@ -82,5 +82,28 @@ public class Auditor extends BaseModel {
 	public String getAdDeptId(){return ad_dept_id;}
 	public String getAdTimeFrom(){return ad_time_from;}
 	public String getAdTimeEnd(){return ad_time_end;}
+	public Vector< Auditor > getAllObj() throws Exception{
+		String tableName = getTableName();
+		String fields[] = getFieldNames();
+		PreparedStatement all =
+			DbInit.getStatement("SELECT * from `" + tableName + "`");
+		ResultSet rs;
+		try{
+			rs = all.executeQuery();
 
+			Vector< Auditor > v = new Vector< Auditor >();
+			while(rs.next()){
+				Auditor m = new Auditor();
+				m.event_id = rs.getString("event_id");
+				m.org_id = rs.getString("org_id");
+				m.p_id = rs.getString("p_id");
+				m.ad_org_id = rs.getString("ad_org_id");
+				m.ad_dept_id = rs.getString("ad_dept_id");
+				m.ad_time_from = rs.getString("ad_time_from");
+				m.ad_time_end = rs.getString("ad_time_end");
+				v.add(m);
+			}
+			return v;
+		}catch(Exception e){throw e;}
+	}
 }
