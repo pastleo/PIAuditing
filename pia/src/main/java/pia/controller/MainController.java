@@ -113,35 +113,38 @@ public class MainController {
     public String models(
         Model m,
         @PathVariable("name") String name) {
-        // if(name.equals("Person"))
-        //     return "/WEB-INF/person/all";
         m.addAttribute("cname",name);
         return "/WEB-INF/general/all";
     }
     //show
-    @RequestMapping(value = "/{className}/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{name}/{id}", method = RequestMethod.GET)
     public String model_show(
         Model m,
-        @PathVariable("className") String className,
+        @PathVariable("name") String name,
         @PathVariable("id") String id) {
-        m.addAttribute("ctrl","/{className}/{id}#GET-show");
+        m.addAttribute("ctrl","/{name}/{id}#GET-show");
         m.addAttribute("id",id);
-        m.addAttribute("cname",className);
+        m.addAttribute("cname",name);
         return "/WEB-INF/general/edit";
     }
     //create
-    @RequestMapping(value = "/TestModel/new", method = RequestMethod.POST)
-    public String model_new(Model m) {
-        m.addAttribute("ctrl","/TestModel/new#POST-create");
+    @RequestMapping(value = "/{name}/new", method = RequestMethod.POST)
+    public String model_new(
+        Model m,
+        @PathVariable("name") String name) {
+        m.addAttribute("ctrl","/name/new#POST-create");
         m.addAttribute("id","new");
-        return "/WEB-INF/testModel/_update";
+        return "/WEB-INF/" + name + "/_update";
     }
     //update
-    @RequestMapping(value = "/TestModel/{id}", method = RequestMethod.POST)
-    public String model_update(Model m,@PathVariable("id") String id) {
-        m.addAttribute("ctrl","/TestModel/{id}#POST-update");
+    @RequestMapping(value = "/{name}/{id}", method = RequestMethod.POST)
+    public String model_update(
+        Model m,
+        @PathVariable("name") String name,
+        @PathVariable("id") String id) {
+        m.addAttribute("ctrl","/name/{id}#POST-update");
         m.addAttribute("id",id);
-        return "/WEB-INF/testModel/_update";
+        return "/WEB-INF/" + name + "/_update";
     }
     //delete
     //to be generalize
