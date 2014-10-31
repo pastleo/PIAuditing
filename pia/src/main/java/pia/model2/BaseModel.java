@@ -25,8 +25,8 @@ public abstract class BaseModel{
 			}
 			return v;
 		}catch(Exception e){throw e;}
-		
 	}
+	
 	protected ResultSet find(String id) throws Exception{
 		String tableName = getTableName(), pk = getPk();
 		PreparedStatement sel =

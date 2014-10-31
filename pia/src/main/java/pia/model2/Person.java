@@ -15,7 +15,7 @@ public class Person extends BaseModel {
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return p_id;}
-	public String getTokens(){return "orgId,deptId,pId,pName,pPhone,pMail,pTitle,pPass";}
+	public String getTokens(){return "org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass";}
 	public Person(){
 		org_id = dept_id = p_id = p_name = p_phone = p_mail = p_title = p_pass =
 		null;
@@ -108,12 +108,37 @@ public class Person extends BaseModel {
 	public String p_title;
 	public String p_pass;
 	public String getOrg_id(){return org_id;}
-	public String getDept_id(){return dept_id;}
-	public String getPId(){return p_id;}
-	public String getPName(){return p_name;}
-	public String getPPhone(){return p_phone;}
-	public String getPMail(){return p_mail;}
-	public String getPTitle(){return p_title;}
-	public String getPPass(){return p_pass;}
+	public String getDept_id(){return Tr.depti(dept_id);}
+	public String getP_id(){return p_id;}
+	public String getP_name(){return p_name;}
+	public String getP_phone(){return p_phone;}
+	public String getP_mail(){return p_mail;}
+	public String getP_title(){return p_title;}
+	public String getP_pass(){return p_pass;}
+	public Vector< Person > getAllObj() throws Exception{
+		String tableName = getTableName();
+		String fields[] = getFieldNames();
+		PreparedStatement all =
+			DbInit.getStatement("SELECT * from `" + tableName + "`");
+		ResultSet rs;
+		try{
+			rs = all.executeQuery();
 
+			Vector< Person > v = new Vector< Person >();
+			while(rs.next()){
+				if(this instanceof Person) ;
+				Person m = new Person();
+				m.org_id = rs.getString("org_id");
+				m.dept_id = rs.getString("dept_id");
+				m.p_id = rs.getString("p_id");
+				m.p_name = rs.getString("p_name");
+				m.p_phone = rs.getString("p_phone");
+				m.p_mail = rs.getString("p_mail");
+				m.p_title = rs.getString("p_title");
+				m.p_pass = rs.getString("p_pass");
+				v.add(m);
+			}
+			return v;
+		}catch(Exception e){throw e;}
+	}
 }

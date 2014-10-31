@@ -24,7 +24,6 @@ public class TestModel extends BaseModel {
 	public String getId(){return id;}
 	public String getTokens(){return "id,author,todo,detail";}
 
-	public String getIdAttr(){return id;}	//oops naming conflict
 	public String getAuthor(){return author;}
 	public String getTodo(){return todo;}
 	public String getDetail(){return detail;}
@@ -105,5 +104,26 @@ public class TestModel extends BaseModel {
 	public String author;
 	public String todo;
 	public String detail;
+	public Vector< TestModel > getAllObj() throws Exception{
+		String tableName = getTableName();
+		String fields[] = getFieldNames();
+		PreparedStatement all =
+			DbInit.getStatement("SELECT * from `" + tableName + "`");
+		ResultSet rs;
+		try{
+			rs = all.executeQuery();
 
+			Vector< TestModel > v = new Vector< TestModel >();
+			while(rs.next()){
+				if(this instanceof TestModel) ;
+				TestModel m = new TestModel();
+				m.id = rs.getString("id");
+				m.author = rs.getString("author");
+				m.todo = rs.getString("todo");
+				m.detail = rs.getString("detail");
+				v.add(m);
+			}
+			return v;
+		}catch(Exception e){throw e;}
+	}
 }

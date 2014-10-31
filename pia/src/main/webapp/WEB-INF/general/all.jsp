@@ -14,8 +14,8 @@
 	<%
 		String cn = String.valueOf(request.getAttribute("cname"));
 		String name = "pia.model2." + cn;
-		BaseModel i = (BaseModel)Class.forName(name).newInstance();
-		pageContext.setAttribute("obj",i,PageContext.PAGE_SCOPE);
+		
+		pageContext.setAttribute("obj",Class.forName(name).newInstance(),PageContext.PAGE_SCOPE);
 		pageContext.setAttribute("cname",cn,PageContext.PAGE_SCOPE);
 	%>
 	
@@ -32,7 +32,7 @@
 		</thead>
 		<tbody>
 			<c:set var="fn" value="fieldNames"/>
-			<c:forEach var="m" items="${obj.all}">
+			<c:forEach var="m" items="${obj.allObj}">
 				<tr>
 					<c:forTokens delims="," var="att" items="${obj.tokens}">
 						<td>

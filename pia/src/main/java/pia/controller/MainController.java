@@ -109,11 +109,13 @@ public class MainController {
     }
 
     //all
-    @RequestMapping(value = "/{className}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{name}", method = RequestMethod.GET)
     public String models(
         Model m,
-        @PathVariable("className") String className) {
-        m.addAttribute("cname",className);
+        @PathVariable("name") String name) {
+        // if(name.equals("Person"))
+        //     return "/WEB-INF/person/all";
+        m.addAttribute("cname",name);
         return "/WEB-INF/general/all";
     }
     //show
