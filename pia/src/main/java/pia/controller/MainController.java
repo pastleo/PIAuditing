@@ -7,8 +7,8 @@ import javax.servlet.http.*;
 import java.security.*;
 import java.sql.*;
 
-
-import pia.model.*;
+//Hello, I have move to model2
+import pia.model2.*;
 import pia.json.*;
 
 @Controller
@@ -127,16 +127,8 @@ public class MainController {
         m.addAttribute("cname",name);
         return "/WEB-INF/general/edit";
     }
-    //create
-    @RequestMapping(value = "/{name}/new", method = RequestMethod.POST)
-    public String model_new(
-        Model m,
-        @PathVariable("name") String name) {
-        m.addAttribute("ctrl","/name/new#POST-create");
-        m.addAttribute("id","new");
-        return "/WEB-INF/" + name + "/_update";
-    }
-    //update
+        
+    //create x update
     @RequestMapping(value = "/{name}/{id}", method = RequestMethod.POST)
     public String model_update(
         Model m,
@@ -144,16 +136,21 @@ public class MainController {
         @PathVariable("id") String id) {
         m.addAttribute("ctrl","/name/{id}#POST-update");
         m.addAttribute("id",id);
-        return "/WEB-INF/" + name + "/_update";
+        return "/WEB-INF/_update/" + name;
     }
     //delete
-    //to be generalize
-    @RequestMapping(value = "/models/delete/{id}", method = RequestMethod.GET)
-    public String model_delete(Model m,@PathVariable("id") String id) {
-        m.addAttribute("ctrl","/models/delete/{id}#GET-delete");
-        //m.addAttribute("id",id);
-        try{new TestModel().delete(id);}catch(Exception e){}
-        m.addAttribute("cname","TestModel");
+    //not tested
+    @RequestMapping(value = "/{name}/delete/{id}", method = RequestMethod.GET)
+    public String model_delete(
+        Model m,
+        @PathVariable("name") String name,
+        @PathVariable("id") String id) {
+        m.addAttribute("ctrl","/name/delete/{id}#GET-delete");
+        try{
+            BaseModel b = (BaseModel)Class.forName("pia.model2."+name).newInstance();
+            b.delete(id);
+        }catch(Exception e){}
+        m.addAttribute("cname",name);
         return "/WEB-INF/general/all";
     }
 }

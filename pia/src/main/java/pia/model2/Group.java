@@ -10,7 +10,7 @@ public class Group extends BaseModel {
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return group_id;}
-	public String getTokens(){return "orgId,groupId,groupName";}
+	public String getTokens(){return "org_id,group_id,group_name";}
 	public Group(){
 		org_id = group_id = group_name =
 		null;
@@ -34,7 +34,7 @@ public class Group extends BaseModel {
 		verify(_org_id,_group_id,_group_name);
 		String sql1 = String.format("(org_id,group_id,group_name)");
 		String sql2 = String.format("(?,?,?)");
-		String sql = String.format("insert into %s %s values %s ",m_tn,sql1,sql2);
+		String sql = String.format("insert into `%s` %s values %s ",m_tn,sql1,sql2);
 		PreparedStatement stm = DbInit.getStatement(sql);
 		stm.setString(1, _org_id);
 		stm.setString(2, _group_id);
@@ -44,7 +44,7 @@ public class Group extends BaseModel {
 	public static void update(String _org_id,String _group_id,String _group_name) throws Exception{
 		verify(_org_id,_group_id,_group_name);
 		String set = "org_id=?,group_name=? where group_id=?";
-		String sql = String.format("update %s set %s",m_tn,set);
+		String sql = String.format("update `%s` set %s",m_tn,set);
 		PreparedStatement stm = DbInit.getStatement(sql);
 		stm.setString(1, _org_id);
 		stm.setString(2, _group_name);
@@ -59,9 +59,9 @@ public class Group extends BaseModel {
 	public String org_id;
 	public String group_id;
 	public String group_name;
-	public String getOrgId(){return org_id;}
-	public String getGroupId(){return group_id;}
-	public String getGroupName(){return group_name;}
+	public String getOrg_id(){return org_id;}
+	public String getGroup_id(){return group_id;}
+	public String getGroup_name(){return group_name;}
 	public Vector< Group > getAllObj() throws Exception{
 		String tableName = getTableName();
 		String fields[] = getFieldNames();

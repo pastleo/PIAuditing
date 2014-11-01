@@ -43,7 +43,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Model edit</title>
+	<title>${cname} edit <%=id%></title>
 </head>
 <body>
 	<div>
@@ -52,7 +52,7 @@
 		<p>id:<%=request.getAttribute("id")%></p>
 	</div>
     
-	<form action="/pia/${cname}/${obj.id}" method="post">
+	<form action="/pia/${cname}/<%=id%>" method="post">
 		<c:forTokens delims="," var="attr" items="${obj.tokens}">
 			<c:set var="v" value="${obj[attr]}"/>
 			${attr}: <input type="text" name="${attr}" value="${v}">

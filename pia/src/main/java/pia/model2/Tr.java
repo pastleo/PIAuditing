@@ -21,9 +21,12 @@ public class Tr{
 		}catch(Exception e){}		
 	}
 	public static String depti(String id){
+		if(id==null) return "";
 		return dept_is.get(id);
+		
 	}
 	public static String depts(String name){
-		return dept_si.get(name);	
+		if(name==null) return "";
+		return dept_si.get(name);
 	}
 }

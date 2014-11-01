@@ -10,7 +10,7 @@ public class Auditor extends BaseModel {
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return p_id;}
-	public String getTokens(){return "eventId,orgId,id,adOrgId,adDeptId,adTimeFrom,adTimeEnd";}
+	public String getTokens(){return "event_id,org_id,p_id,ad_org_id,ad_dept_id,ad_time_from,ad_time_end";}
 	public Auditor(){
 		event_id = org_id = p_id = ad_org_id = ad_dept_id = ad_time_from = ad_time_end =
 		null;
@@ -76,12 +76,13 @@ public class Auditor extends BaseModel {
 	public String ad_dept_id;
 	public String ad_time_from;
 	public String ad_time_end;
-	public String getEventId(){return event_id;}
-	public String getOrgId(){return org_id;}
-	public String getAdOrgId(){return ad_org_id;}
-	public String getAdDeptId(){return ad_dept_id;}
-	public String getAdTimeFrom(){return ad_time_from;}
-	public String getAdTimeEnd(){return ad_time_end;}
+	public String getEvent_id(){return event_id;}
+	public String getOrg_id(){return org_id;}
+	public String getP_id(){return p_id;}
+	public String getAd_org_id(){return ad_org_id;}
+	public String getAd_dept_id(){return ad_dept_id;}
+	public String getAd_time_from(){return ad_time_from;}
+	public String getAd_time_end(){return ad_time_end;}
 	public Vector< Auditor > getAllObj() throws Exception{
 		String tableName = getTableName();
 		String fields[] = getFieldNames();

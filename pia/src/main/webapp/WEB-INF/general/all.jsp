@@ -14,7 +14,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Models</title>
+	<title>${cname}s</title>
 </head>
 <body>
 
