@@ -5,12 +5,12 @@ import pia.model.*;
 public class Dept extends BaseModel {
 	private static String m_tn = "dept";
 	private static String m_pk = "dept_id";
-	private static String m_fn[] = {"org_id","group_id","dept_id","dept_name"};
+	private static String m_fn[] = {"#","學校","院系","單位名稱"};
 	public String[] getFieldNames(){return m_fn;}
 	public String getTableName(){return m_tn;}
 	public String getPk(){return m_pk;}
 	public String getId(){return dept_id;}
-	public String getTokens(){return "org_id,group_id,dept_id,dept_name";}
+	public String getTokens(){return "dept_id,org_id,group_name,dept_name";}
 	public Dept(){
 		org_id = group_id = dept_id = dept_name =
 		null;
@@ -62,8 +62,10 @@ public class Dept extends BaseModel {
 	public String group_id;
 	public String dept_id;
 	public String dept_name;
+	public String group_name;
 	public String getOrg_id(){return org_id;}
 	public String getGroup_id(){return group_id;}
+	public String getGroup_name(){ if( group_name == null ) return group_name = Tr.depti(group_id); else return group_name;}
 	public String getDept_id(){return dept_id;}
 	public String getDept_name(){return dept_name;}
 	public Vector< Dept > getAllObj() throws Exception{
@@ -82,6 +84,7 @@ public class Dept extends BaseModel {
 				m.group_id = rs.getString("group_id");
 				m.dept_id = rs.getString("dept_id");
 				m.dept_name = rs.getString("dept_name");
+				m.getGroup_name();
 				v.add(m);
 			}
 			return v;

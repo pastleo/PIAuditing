@@ -15,10 +15,10 @@ public class Tr{
 		try{
 			ResultSet rs = DbInit.query(sql);
 			while(rs.next()){
-				dept_is.put(rs.getString("dpt_id"),rs.getString("dept_name"));		
-				dept_si.put(rs.getString("dept_name"),rs.getString("dpt_id"));			
+				dept_is.put(rs.getString("dpt_id"),rs.getString("dept_name"));
+				dept_si.put(rs.getString("dept_name"),rs.getString("dpt_id"));
 			}
-		}catch(Exception e){}		
+		}catch(Exception e){}
 	}
 	public static String depti(String id){
 		if(id==null) return "";

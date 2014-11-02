@@ -5,13 +5,27 @@ import org.springframework.ui.*;
 import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.*;
 import java.security.*;
+import java.util.*;
 
-import pia.model.*;
+import pia.model2.*;
 import pia.json.*;
 import pia.httpStatus.*;
 
 @Controller
 public class AdminController {
+
+    private static Map<String,String> type2name;
+    private static Map<String,String> type2name(){
+        if(type2name != null)
+            return type2name;
+        type2name = new TreeMap<String,String>();
+        type2name.put("dept","單位資料表");
+        type2name.put("person","人員資料表");
+        type2name.put("audit","稽核設定");
+        type2name.put("cal","行事曆");
+        type2name.put("event","事件設定");
+        return type2name;
+    };
 
     @RequestMapping("admin")
     public String view(HttpSession s,Model m) {
@@ -26,380 +40,40 @@ public class AdminController {
           return "redirect:logout";
         }
 
-        return "/WEB-INF/view/admin/master";
+        return "redirect:/admin/dept";
     }
 
     @RequestMapping(value = "/admin/{type}", method = RequestMethod.GET)
-    public @ResponseBody AjaxResult getAll(
+    public String getAll(
         @PathVariable("type") String type,
         HttpSession s,
         Model m) {
-        AjaxResult r = new AjaxResult();
         if(s.getAttribute("UA") == null)
             throw new Http403();
 
         Object message = s.getAttribute("message");
         if(message != null){
-            r.setMsg((String)message);
+            m.addAttribute("message", message);
             s.removeAttribute("message");
         }
 
-        try{
-            switch(type){
-                case "person":
-                    r.setData(Person.getAll());
-                    break;
-                case "dept":
-                    r.setData(Dept.getAll());
-                    break;
-                case "group":
-                    r.setData(Group.getAll());
-                    break;
-                case "auditor":
-                    r.setData(Auditor.getAll());
-                    break;
-                case "event":
-                    r.setData(Event.getAll());
-                    break;
-                default:
-                    throw new Http404();
-            }
+        String className;
 
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            r.setMsg((String)e.getMessage());
-            //throw new Http500();
+        switch(type){
+            case "person":
+            case "dept":
+            case "group":
+            case "auditor":
+            case "event":
+                className = type.substring(0, 1).toUpperCase() + type.substring(1);
+                //throw new Http404();
+                try{m.addAttribute("obj",Class.forName("pia.model2." + className).newInstance());}catch(Exception e){throw new Http500();}
+                m.addAttribute("title",type2name().get(type));
+                m.addAttribute("type",type);
+                return "/WEB-INF/view/admin/info";
+            default:
+                throw new Http404();
         }
-        return r;
-    }
-
-    @RequestMapping(value = "/admin/{type}/{id}", method = RequestMethod.GET)
-    public @ResponseBody AjaxResult getOne(
-        @PathVariable("type") String type,
-        @PathVariable("id") String id,
-        HttpSession s,
-        Model m) {
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            switch(type){
-                case "person":
-                    r.setData((new Person(id)).get());
-                    break;
-                case "dept":
-                    r.setData((new Dept(id)).get());
-                    break;
-                case "group":
-                    r.setData((new Group(id)).get());
-                    break;
-                default:
-                    throw new Http404();
-            }
-
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    // ====================
-
-    @RequestMapping(value = "/admin/person/", method = RequestMethod.POST)
-    public @ResponseBody AjaxResult createPerson(
-        @RequestParam("org_id") String org_id,
-        @RequestParam("dept_id") String dept_id,
-        @RequestParam("p_id") String p_id,
-        @RequestParam("p_name") String p_name,
-        @RequestParam("p_phone") String p_phone,
-        @RequestParam("p_mail") String p_mail,
-        @RequestParam("p_title") String p_title,
-        @RequestParam("p_pass") String p_pass,
-        HttpSession s,
-        Model m) {
-
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Person.add(org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass);
-
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "/admin/person/{p_id}", method = RequestMethod.POST)
-    public @ResponseBody AjaxResult updatePerson(
-        @PathVariable("p_id") String p_id,
-        @RequestParam("org_id") String org_id,
-        @RequestParam("dept_id") String dept_id,
-        @RequestParam("p_name") String p_name,
-        @RequestParam("p_phone") String p_phone,
-        @RequestParam("p_mail") String p_mail,
-        @RequestParam("p_title") String p_title,
-        @RequestParam("p_pass") String p_pass,
-        HttpSession s,
-        Model m) {
-
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Person.update(org_id,dept_id,p_id,p_name,p_phone,p_mail,p_title,p_pass);
-
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "/admin/person/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody AjaxResult delPerson(
-        @PathVariable("id") String id,
-        HttpSession s,
-        Model m) {
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Person.delete(id);
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    // ====================
-
-    @RequestMapping(value = "/admin/dept/", method = RequestMethod.POST)
-    public @ResponseBody AjaxResult createDept(
-        @RequestParam("org_id") String org_id,
-        @RequestParam("group_id") String group_id,
-        @RequestParam("dept_id") String dept_id,
-        @RequestParam("dept_name") String dept_name,
-        HttpSession s,
-        Model m) {
-
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Dept.add(org_id,group_id,dept_id,dept_name);
-
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "/admin/dept/{dept_id}", method = RequestMethod.POST)
-    public @ResponseBody AjaxResult updateDept(
-        @PathVariable("dept_id") String dept_id,
-        @RequestParam("org_id") String org_id,
-        @RequestParam("group_id") String group_id,
-        @RequestParam("dept_name") String dept_name,
-        HttpSession s,
-        Model m) {
-
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Dept.update(org_id,group_id,dept_id,dept_name);
-
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "/admin/dept/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody AjaxResult delDept(
-        @PathVariable("id") String id,
-        HttpSession s,
-        Model m) {
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Dept.delete(id);
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    // ====================
-
-    @RequestMapping(value = "/admin/group/", method = RequestMethod.POST)
-    public @ResponseBody AjaxResult createGroup(
-        @RequestParam("org_id") String org_id,
-        @RequestParam("group_id") String group_id,
-        @RequestParam("group_name") String group_name,
-        HttpSession s,
-        Model m) {
-
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Group.add(org_id,group_id,group_name);
-
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "/admin/group/{org_id}", method = RequestMethod.POST)
-    public @ResponseBody AjaxResult updateGroup(
-        @PathVariable("org_id") String org_id,
-        @RequestParam("group_id") String group_id,
-        @RequestParam("group_name") String group_name,
-        HttpSession s,
-        Model m) {
-
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Group.update(org_id,group_id,group_name);
-
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
-    }
-
-    @RequestMapping(value = "/admin/group/{id}", method = RequestMethod.DELETE)
-    public @ResponseBody AjaxResult delGroup(
-        @PathVariable("id") String id,
-        HttpSession s,
-        Model m) {
-        AjaxResult r = new AjaxResult();
-        try{
-            if(s.getAttribute("UA") == null)
-                throw new Exception("You havent login!");
-
-            Object message = s.getAttribute("message");
-            if(message != null){
-                r.setMsg((String)message);
-                s.removeAttribute("message");
-            }
-
-            Group.delete(id);
-            r.success();
-        }catch(HttpStatusBase e){
-            throw e;
-        }catch(Exception e){
-            r.fail();
-            throw new Http500();
-        }
-        return r;
     }
 
     // ====================

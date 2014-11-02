@@ -9,7 +9,7 @@ public class Person extends BaseModel {
 
 	private static String m_tn = "person";
 	private static String m_pk = "p_id";
-	private static String m_fn[] = {"org_id","dept_id","p_id","p_name","p_phone","p_mail","p_title","p_pass"};
+	private static String m_fn[] = {"#","學校","p_id","p_name","p_phone","p_mail","p_title","p_pass"};
 
 	public String[] getFieldNames(){return m_fn;}
 	public String getTableName(){return m_tn;}
